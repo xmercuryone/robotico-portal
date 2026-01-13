@@ -1,0 +1,648 @@
+---
+import Layout from '../layouts/Layout.astro';
+import companiesData from '../data/companies.json';
+
+const companies = companiesData.companies;
+
+// Calculate statistics
+const publicCount = companies.filter(c => c.type === 'public').length;
+const privateCount = companies.filter(c => c.type === 'private').length;
+const countries = [...new Set(companies.map(c => c.country))];
+
+// Format currency
+function formatValuation(value: number | null): string {
+  if (!value) return '—';
+  if (value >= 1e12) return `$${(value / 1e12).toFixed(2)}T`;
+  if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
+  if (value >= 1e6) return `$${(value / 1e6).toFixed(0)}M`;
+  return `$${value.toLocaleString()}`;
+}
+
+// Calculate total private valuation
+const totalPrivateValuation = companies
+  .filter(c => c.type === 'private' && c.valuationManual)
+  .reduce((sum, c) => sum + (c.valuationManual || 0), 0);
+
+// SEO metadata
+const siteUrl = "https://xmaquina-marketcap.netlify.app";
+const pageTitle = "Industry Overview | XMAQUINA Market Cap";
+const pageDescription = `Explore the humanoid robotics industry with ${companies.length} companies across ${countries.length} countries. View market trends, valuations, and growth metrics.`;
+const pageKeywords = "humanoid robotics industry, robotics market cap, humanoid robot companies, robotics market share, robotics industry trends";
+
+const industryStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": pageTitle,
+  "description": pageDescription,
+  "url": `${siteUrl}/industry`,
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": siteUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Industry",
+        "item": `${siteUrl}/industry`
+      }
+    ]
+  }
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalUrl={`${siteUrl}/industry`}
+  structuredData={industryStructuredData}
+>
+  <div class="industry-page">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="/">Home</a>
+      <span>/</span>
+      <span class="current">Industry</span>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="industry-hero">
+      <h1>Industry Overview</h1>
+      <p>Track the growth and trends of the humanoid robotics market</p>
+    </section>
+
+    <div class="industry-content">
+      <!-- Key Metrics -->
+      <section class="key-metrics">
+        <div class="metric-card highlight">
+          <span class="metric-value" id="total-industry-cap">—</span>
+          <span class="metric-label">Total Industry Valuation</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value" id="yoy-growth">—</span>
+          <span class="metric-label">Growth (6 Months)</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">{companies.length}</span>
+          <span class="metric-label">Companies Tracked</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">{countries.length}</span>
+          <span class="metric-label">Countries</span>
+        </div>
+      </section>
+
+      <!-- Industry Growth Chart -->
+      <section class="chart-section">
+        <div class="section-header">
+          <h2>Industry Growth</h2>
+          <p>Total market capitalization over time</p>
+        </div>
+        <div class="chart-container large">
+          <canvas id="industry-chart"></canvas>
+        </div>
+      </section>
+
+      <!-- Market Share -->
+      <section class="chart-section">
+        <div class="section-header">
+          <h2>Market Share by Company</h2>
+          <p>Top companies by valuation</p>
+        </div>
+        <div class="chart-container">
+          <canvas id="market-share-chart"></canvas>
+        </div>
+      </section>
+
+      <!-- Breakdown Stats -->
+      <section class="breakdown-section">
+        <div class="breakdown-grid">
+          <div class="breakdown-card">
+            <h3>By Company Type</h3>
+            <div class="breakdown-items">
+              <div class="breakdown-item">
+                <span class="breakdown-label">
+                  <span class="dot public"></span>
+                  Public Companies
+                </span>
+                <span class="breakdown-value">{publicCount}</span>
+              </div>
+              <div class="breakdown-item">
+                <span class="breakdown-label">
+                  <span class="dot private"></span>
+                  Private Companies
+                </span>
+                <span class="breakdown-value">{privateCount}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="breakdown-card">
+            <h3>By Region</h3>
+            <div class="breakdown-items">
+              {countries.map(country => {
+                const count = companies.filter(c => c.country === country).length;
+                return (
+                  <div class="breakdown-item">
+                    <span class="breakdown-label">{country}</span>
+                    <span class="breakdown-value">{count}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div class="breakdown-card">
+            <h3>Private Company Valuations</h3>
+            <div class="breakdown-items">
+              <div class="breakdown-item">
+                <span class="breakdown-label">Total Private Valuation</span>
+                <span class="breakdown-value">{formatValuation(totalPrivateValuation)}</span>
+              </div>
+              <div class="breakdown-item">
+                <span class="breakdown-label">Average Valuation</span>
+                <span class="breakdown-value">{formatValuation(totalPrivateValuation / privateCount)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Company Type Distribution -->
+      <section class="chart-section">
+        <div class="section-header">
+          <h2>Valuation Distribution</h2>
+          <p>Public vs Private companies</p>
+        </div>
+        <div class="chart-container small">
+          <canvas id="type-distribution-chart"></canvas>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<script id="companies-data" type="application/json" set:html={JSON.stringify(companies)}></script>
+
+<script>
+  function initIndustryCharts() {
+    const companiesRaw = document.getElementById('companies-data')?.textContent;
+    if (!companiesRaw) return;
+
+    const companiesData = JSON.parse(companiesRaw);
+
+    // Aggregate valuation history by date, tracking company count
+    const dateMap = new Map<string, { total: number; count: number }>();
+    companiesData.forEach((company: any) => {
+      if (company.valuationHistory) {
+        company.valuationHistory.forEach((entry: any) => {
+          const current = dateMap.get(entry.date) || { total: 0, count: 0 };
+          current.total += entry.value;
+          current.count += 1;
+          dateMap.set(entry.date, current);
+        });
+      }
+    });
+
+    // Filter to only include dates with at least 5 companies reporting
+    // This ensures meaningful market representation
+    const minCompanies = 5;
+    const filteredDates = Array.from(dateMap.entries())
+      .filter(([_, data]) => data.count >= minCompanies)
+      .sort((a, b) => a[0].localeCompare(b[0]));
+
+    const chartLabels = filteredDates.map(([d]) => {
+      const [year, month] = d.split('-');
+      return `${month}/${year.slice(2)}`;
+    });
+    const chartValues = filteredDates.map(([_, data]) => data.total / 1e9);
+
+    // Calculate growth
+    const latestValue = chartValues[chartValues.length - 1] || 0;
+    const sixMonthsAgoIndex = Math.max(0, chartValues.length - 3);
+    const sixMonthsAgoValue = chartValues[sixMonthsAgoIndex] || latestValue;
+    const growth = sixMonthsAgoValue > 0 ? ((latestValue - sixMonthsAgoValue) / sixMonthsAgoValue * 100) : 0;
+
+    // Update stats
+    const totalCapEl = document.getElementById('total-industry-cap');
+    const growthEl = document.getElementById('yoy-growth');
+    if (totalCapEl) totalCapEl.textContent = `$${latestValue.toFixed(0)}B`;
+    if (growthEl) {
+      growthEl.textContent = `${growth >= 0 ? '+' : ''}${growth.toFixed(1)}%`;
+      growthEl.classList.add(growth >= 0 ? 'positive' : 'negative');
+    }
+
+    // Check theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+    const textColor = isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)';
+
+    // Industry Growth Chart
+    const industryCtx = document.getElementById('industry-chart') as HTMLCanvasElement;
+    if (industryCtx) {
+      new (window as any).Chart(industryCtx, {
+        type: 'line',
+        data: {
+          labels: chartLabels,
+          datasets: [{
+            label: 'Total Market Cap ($B)',
+            data: chartValues,
+            borderColor: '#1ED612',
+            backgroundColor: 'rgba(30, 214, 18, 0.15)',
+            fill: true,
+            stepped: true,
+            pointRadius: 4,
+            pointBackgroundColor: '#1ED612',
+            pointBorderColor: isDark ? '#18181b' : '#ffffff',
+            pointBorderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: isDark ? '#27272a' : '#ffffff',
+              titleColor: isDark ? '#fafafa' : '#010101',
+              bodyColor: isDark ? '#a1a1aa' : '#71717a',
+              borderColor: isDark ? '#3f3f46' : '#e4e4e7',
+              borderWidth: 1,
+              padding: 12,
+              callbacks: {
+                label: (context: any) => `$${context.parsed.y.toFixed(0)}B`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: gridColor },
+              ticks: { color: textColor }
+            },
+            y: {
+              grid: { color: gridColor },
+              ticks: {
+                color: textColor,
+                callback: (value: any) => `$${value}B`
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Market Share Chart
+    const topCompanies = [...companiesData]
+      .sort((a: any, b: any) => (b.valuationManual || 0) - (a.valuationManual || 0))
+      .slice(0, 10);
+
+    const shareCtx = document.getElementById('market-share-chart') as HTMLCanvasElement;
+    if (shareCtx) {
+      new (window as any).Chart(shareCtx, {
+        type: 'bar',
+        data: {
+          labels: topCompanies.map((c: any) => c.name),
+          datasets: [{
+            label: 'Valuation ($B)',
+            data: topCompanies.map((c: any) => (c.valuationManual || 0) / 1e9),
+            backgroundColor: topCompanies.map((c: any) =>
+              c.type === 'public' ? '#1ED612' : 'rgba(255, 255, 255, 0.3)'
+            ),
+            borderColor: topCompanies.map((c: any) =>
+              c.type === 'public' ? '#1ED612' : 'rgba(255, 255, 255, 0.5)'
+            ),
+            borderWidth: 1,
+            borderRadius: 0
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: isDark ? '#27272a' : '#ffffff',
+              titleColor: isDark ? '#fafafa' : '#010101',
+              bodyColor: isDark ? '#a1a1aa' : '#71717a',
+              borderColor: isDark ? '#3f3f46' : '#e4e4e7',
+              borderWidth: 1,
+              callbacks: {
+                label: (context: any) => `$${context.parsed.x.toFixed(1)}B`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: gridColor },
+              ticks: {
+                color: textColor,
+                callback: (value: any) => `$${value}B`
+              }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { color: textColor }
+            }
+          }
+        }
+      });
+    }
+
+    // Type Distribution Chart (Doughnut)
+    const publicVal = companiesData
+      .filter((c: any) => c.type === 'public' && c.valuationManual)
+      .reduce((sum: number, c: any) => sum + (c.valuationManual || 0), 0) / 1e9;
+    const privateVal = companiesData
+      .filter((c: any) => c.type === 'private' && c.valuationManual)
+      .reduce((sum: number, c: any) => sum + (c.valuationManual || 0), 0) / 1e9;
+
+    const typeCtx = document.getElementById('type-distribution-chart') as HTMLCanvasElement;
+    if (typeCtx) {
+      new (window as any).Chart(typeCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Public Companies', 'Private Companies'],
+          datasets: [{
+            data: [publicVal, privateVal],
+            backgroundColor: ['#1ED612', 'rgba(255, 255, 255, 0.3)'],
+            borderColor: ['#1ED612', 'rgba(255, 255, 255, 0.5)'],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: textColor,
+                padding: 20,
+                usePointStyle: true
+              }
+            },
+            tooltip: {
+              backgroundColor: isDark ? '#27272a' : '#ffffff',
+              titleColor: isDark ? '#fafafa' : '#010101',
+              bodyColor: isDark ? '#a1a1aa' : '#71717a',
+              borderColor: isDark ? '#3f3f46' : '#e4e4e7',
+              borderWidth: 1,
+              callbacks: {
+                label: (context: any) => `$${context.parsed.toFixed(1)}B`
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initIndustryCharts);
+</script>
+
+<style>
+  .industry-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumb a {
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-primary);
+  }
+
+  .breadcrumb .current {
+    color: var(--color-text);
+  }
+
+  .industry-hero {
+    text-align: center;
+    padding: var(--spacing-2xl) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .industry-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.03em;
+  }
+
+  .industry-hero p {
+    color: var(--color-text-muted);
+    font-size: 1.125rem;
+  }
+
+  .industry-content {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  /* Key Metrics */
+  .key-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .metric-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    padding: var(--spacing-xl);
+    text-align: center;
+  }
+
+  .metric-card.highlight {
+    border-color: var(--color-primary);
+    background: rgba(30, 214, 18, 0.05);
+  }
+
+  .metric-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .metric-value.positive {
+    color: var(--color-primary);
+  }
+
+  .metric-value.negative {
+    color: #ef4444;
+  }
+
+  .metric-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Chart Sections */
+  .chart-section {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .section-header {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.02em;
+  }
+
+  .section-header p {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .chart-container {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    padding: var(--spacing-xl);
+    height: 350px;
+  }
+
+  .chart-container.large {
+    height: 400px;
+  }
+
+  .chart-container.small {
+    height: 300px;
+    max-width: 500px;
+  }
+
+  /* Breakdown Section */
+  .breakdown-section {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .breakdown-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    padding: var(--spacing-lg);
+  }
+
+  .breakdown-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .breakdown-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .breakdown-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .breakdown-value {
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--color-text);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .dot.public {
+    background: var(--color-primary);
+  }
+
+  .dot.private {
+    background: var(--color-text-muted);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .key-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .breakdown-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .industry-page {
+      padding: 0 var(--spacing-md);
+    }
+
+    .industry-hero h1 {
+      font-size: 1.75rem;
+    }
+
+    .key-metrics {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-md);
+    }
+
+    .metric-card {
+      padding: var(--spacing-md);
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+    }
+
+    .chart-container {
+      padding: var(--spacing-md);
+      height: 300px;
+    }
+
+    .chart-container.large {
+      height: 300px;
+    }
+  }
+</style>

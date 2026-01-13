@@ -1,0 +1,224 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: string;
+  structuredData?: object;
+  keywords?: string;
+}
+
+const {
+  title,
+  description = "Track the market cap and valuation of leading humanoid robotics companies worldwide. Real-time stock data, funding history, and comprehensive profiles for Tesla, Figure AI, Boston Dynamics, and more.",
+  canonicalUrl = Astro.url.href,
+  ogImage = "https://xmaquina-marketcap.netlify.app/og-image.svg",
+  ogType = "website",
+  structuredData,
+  keywords = "humanoid robots, robotics companies, market cap, valuation, Tesla Optimus, Figure AI, Boston Dynamics, robotics industry, AI robots"
+} = Astro.props;
+
+const siteUrl = "https://xmaquina-marketcap.netlify.app";
+const siteName = "XMAQUINA Market Cap";
+
+// Default Organization schema
+const defaultStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": siteName,
+  "url": siteUrl,
+  "description": description,
+  "publisher": {
+    "@type": "Organization",
+    "name": "XMAQUINA",
+    "url": "https://xmaquina.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/xmaquina-logo.svg`
+    }
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": `${siteUrl}/?search={search_term_string}`
+    },
+    "query-input": "required name=search_term_string"
+  }
+};
+
+const finalStructuredData = structuredData || defaultStructuredData;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="XMAQUINA" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="1 days" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Structured Data for AI and Search Engines -->
+    <script type="application/ld+json" set:html={JSON.stringify(finalStructuredData)} />
+    <script is:inline>
+      // Prevent flash of wrong theme
+      (function() {
+        const theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-content">
+        <a href="/" class="logo">
+          <img src="/xmaquina-logo-dark.svg" alt="XMAQUINA" class="logo-light" width="140" height="13" />
+          <img src="/xmaquina-logo.svg" alt="XMAQUINA" class="logo-dark" width="140" height="13" />
+        </a>
+        <div class="header-right">
+          <nav class="nav">
+            <a href="/">Companies</a>
+            <a href="/industry">Industry</a>
+            <a href="/globe">Globe</a>
+            <a href="/news">News</a>
+            <a href="https://xmaquina.io" target="_blank" rel="noopener">About</a>
+          </nav>
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+          <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle menu">
+            <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+            <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav id="mobile-nav" class="mobile-nav">
+        <a href="/">Companies</a>
+        <a href="/industry">Industry</a>
+        <a href="/globe">Globe</a>
+        <a href="/news">News</a>
+        <a href="https://xmaquina.io" target="_blank" rel="noopener">About XMAQUINA</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <img src="/xmaquina-logo-dark.svg" alt="XMAQUINA" class="logo-light" width="120" height="11" />
+            <img src="/xmaquina-logo.svg" alt="XMAQUINA" class="logo-dark" width="120" height="11" />
+          </div>
+          <div class="footer-links">
+            <a href="/">Companies</a>
+            <a href="/industry">Industry</a>
+            <a href="/globe">Globe</a>
+            <a href="/news">News</a>
+            <a href="https://xmaquina.io" target="_blank" rel="noopener">About</a>
+          </div>
+        </div>
+        <p class="footer-note">Data updates every 15 minutes for public companies. Private company valuations are based on latest funding rounds.</p>
+      </div>
+    </footer>
+
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+
+      function setTheme(theme: string) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      }
+
+      themeToggle?.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+      });
+
+      // Mobile menu toggle
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileNav = document.getElementById('mobile-nav');
+
+      mobileMenuToggle?.addEventListener('click', () => {
+        mobileMenuToggle.classList.toggle('active');
+        mobileNav?.classList.toggle('open');
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!mobileMenuToggle?.contains(e.target as Node) && !mobileNav?.contains(e.target as Node)) {
+          mobileMenuToggle?.classList.remove('active');
+          mobileNav?.classList.remove('open');
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

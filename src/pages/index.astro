@@ -1,0 +1,609 @@
+---
+import Layout from '../layouts/Layout.astro';
+import companiesData from '../data/companies.json';
+
+const companies = companiesData.companies;
+
+// Format currency
+function formatValuation(value: number | null): string {
+  if (!value) return '—';
+  if (value >= 1e12) return `$${(value / 1e12).toFixed(2)}T`;
+  if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
+  if (value >= 1e6) return `$${(value / 1e6).toFixed(0)}M`;
+  return `$${value.toLocaleString()}`;
+}
+
+// Get initials for logo
+function getInitials(name: string): string {
+  return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+}
+
+// Country flag emoji
+const countryFlags: Record<string, string> = {
+  'USA': '🇺🇸',
+  'China': '🇨🇳',
+  'South Korea': '🇰🇷',
+  'Japan': '🇯🇵',
+  'Germany': '🇩🇪',
+  'Norway': '🇳🇴',
+  'Canada': '🇨🇦'
+};
+
+// Calculate totals
+const publicCount = companies.filter(c => c.type === 'public').length;
+const privateCount = companies.filter(c => c.type === 'private').length;
+
+// Get unique countries
+const countries = [...new Set(companies.map(c => c.country))].sort();
+
+// Companies with dark/black logos that need light background in dark mode
+const darkLogos = ['apptronik', 'hyundai', 'honda', 'toyota', 'xpeng', 'agility-robotics', '1x-technologies', 'neura-robotics'];
+
+// Companies with white/light logos that need to be inverted in light mode
+const lightLogos: string[] = [];
+
+// Companies with SVG logos instead of ICO
+const svgLogos = ['neura-robotics'];
+function getLogoPath(companyId: string): string {
+  return `/logos/${companyId}.${svgLogos.includes(companyId) ? 'svg' : 'ico'}`;
+}
+
+// SEO metadata
+const siteUrl = "https://xmaquina-marketcap.netlify.app";
+const pageTitle = "XMAQUINA Market Cap | Humanoid Robotics Companies Directory & Valuations";
+const pageDescription = `Track ${companies.length} leading humanoid robotics companies worldwide. Real-time market cap data for Tesla Optimus, Figure AI, Boston Dynamics, Unitree, and more. Compare valuations, funding rounds, and company profiles.`;
+const pageKeywords = "humanoid robots market cap, robotics companies valuation, Tesla Optimus, Figure AI, Boston Dynamics Atlas, Unitree H1, humanoid robotics industry, robot companies stock, AI robots, autonomous robots";
+
+// Structured data for homepage (ItemList of companies)
+const homepageStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}#website`,
+      "name": "XMAQUINA Market Cap",
+      "url": siteUrl,
+      "description": pageDescription,
+      "publisher": {
+        "@type": "Organization",
+        "name": "XMAQUINA",
+        "url": "https://xmaquina.io"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${siteUrl}/?search={search_term_string}`
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "ItemList",
+      "name": "Humanoid Robotics Companies",
+      "description": "Directory of leading humanoid robotics companies ranked by market capitalization",
+      "numberOfItems": companies.length,
+      "itemListElement": companies.map((company, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": company.name,
+        "url": `${siteUrl}/company/${company.id}`,
+        "item": {
+          "@type": "Organization",
+          "name": company.name,
+          "url": company.website,
+          "description": company.description.slice(0, 160)
+        }
+      }))
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the top humanoid robotics companies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `The leading humanoid robotics companies include ${companies.slice(0, 5).map(c => c.name).join(', ')}, and more. These companies are developing advanced humanoid robots for manufacturing, logistics, and household applications.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many humanoid robotics companies are tracked?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `XMAQUINA Market Cap tracks ${companies.length} humanoid robotics companies, including ${publicCount} publicly traded companies and ${privateCount} private companies from ${countries.length} countries.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which humanoid robots are in development?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `Major humanoid robots in development include ${companies.slice(0, 6).map(c => `${c.flagshipRobot} by ${c.name}`).join(', ')}, among others.`
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalUrl={siteUrl}
+  structuredData={homepageStructuredData}
+>
+  <div class="grid-lines-wrapper">
+    <section class="hero">
+      <div class="container">
+        <h1>Humanoid Robotics Directory</h1>
+        <p>Track the market cap and valuation of leading humanoid robotics companies worldwide</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="stats-bar">
+        <div class="stat">
+          <div class="stat-value">{companies.length}</div>
+          <div class="stat-label">Companies</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">{publicCount}</div>
+          <div class="stat-label">Public</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">{privateCount}</div>
+          <div class="stat-label">Private</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="total-market-cap">Loading...</div>
+          <div class="stat-label">Valuation</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="table-container">
+      <div class="table-header">
+        <h2 class="table-title">All Companies</h2>
+        <div class="table-controls">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.3-4.3"/>
+            </svg>
+            <input type="text" id="search-input" placeholder="Search companies..." />
+          </div>
+          <div class="type-toggle" id="type-toggle">
+            <button class="toggle-btn active" data-type="">All</button>
+            <button class="toggle-btn" data-type="public">Public</button>
+            <button class="toggle-btn" data-type="private">Private</button>
+          </div>
+          <div class="filter-dropdown">
+            <button id="country-filter-btn" class="filter-btn">
+              <span>All Countries</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </button>
+            <div id="country-dropdown" class="dropdown-menu">
+              <button class="dropdown-item active" data-country="">All Countries</button>
+              {countries.map(country => (
+                <button class="dropdown-item" data-country={country}>
+                  {countryFlags[country] || ''} {country}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table id="companies-table">
+          <thead>
+            <tr>
+              <th data-sort="rank" class="sorted">#</th>
+              <th data-sort="name">Company</th>
+              <th data-sort="robot" class="hide-mobile">Flagship Robot</th>
+              <th data-sort="valuation" class="text-right">Valuation</th>
+              <th data-sort="change" class="text-right hide-mobile">24h %</th>
+              <th data-sort="country" class="hide-mobile">Country</th>
+              <th data-sort="type" class="hide-mobile">Type</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+          {companies.map((company, index) => (
+            <tr data-id={company.id} data-valuation={company.valuationManual || 0} data-country={company.country} data-type={company.type}>
+              <td class="rank">{String(index + 1).padStart(2, '0')}</td>
+              <td>
+                <div class="company-cell">
+                  <img
+                    src={getLogoPath(company.id)}
+                    alt={`${company.name} logo`}
+                    class={`company-logo${darkLogos.includes(company.id) ? ' dark-logo' : ''}${lightLogos.includes(company.id) ? ' light-logo' : ''}`}
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                  />
+                  <div class="company-logo-fallback" style="display:none;">{getInitials(company.name)}</div>
+                  <div class="company-info">
+                    <a href={`/company/${company.id}`} class="company-name">
+                      {company.name}
+                    </a>
+                    <span class="company-ticker">
+                      {company.ticker ? `${company.exchange}: ${company.ticker}` : 'Private'}
+                    </span>
+                  </div>
+                </div>
+              </td>
+              <td class="hide-mobile">
+                {company.robots && company.robots.length > 0 ? (
+                  <a href={`/robot/${company.robots[0].id}`} class="robot-name">
+                    {company.flagshipRobot}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd" />
+                      <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd" />
+                    </svg>
+                  </a>
+                ) : (
+                  <span class="robot-name-text">{company.flagshipRobot}</span>
+                )}
+              </td>
+              <td class="text-right">
+                <span class="valuation" data-ticker={company.ticker} data-manual={company.valuationManual}>
+                  {company.type === 'public' ? 'Loading...' : formatValuation(company.valuationManual)}
+                </span>
+              </td>
+              <td class="text-right hide-mobile">
+                <span class="change neutral" data-ticker={company.ticker}>
+                  {company.type === 'public' ? '—' : '—'}
+                </span>
+              </td>
+              <td class="hide-mobile">
+                <span class="country">
+                  {countryFlags[company.country] || '🌍'} {company.country}
+                </span>
+              </td>
+              <td class="hide-mobile">
+                <span class={`type-badge ${company.type}`}>
+                  {company.type === 'public' ? 'Public' : 'Private'}
+                </span>
+              </td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <button disabled aria-label="Previous page">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+        <button class="active">1</button>
+        <button disabled aria-label="Next page">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script id="companies-data" type="application/json" set:html={JSON.stringify(companies)}></script>
+
+<script>
+  // Format currency helper
+  function formatValuation(value: number): string {
+    if (value >= 1e12) return `$${(value / 1e12).toFixed(2)}T`;
+    if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
+    if (value >= 1e6) return `$${(value / 1e6).toFixed(0)}M`;
+    return `$${value.toLocaleString()}`;
+  }
+
+  // Fetch real stock prices from Yahoo Finance API
+  async function fetchStockPrices(): Promise<Record<string, { marketCap: number; change: number }>> {
+    try {
+      const response = await fetch('/api/stock-prices');
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        const stockData: Record<string, { marketCap: number; change: number }> = {};
+
+        // Convert API response to our format (keyed by company ID)
+        Object.entries(result.data).forEach(([companyId, data]: [string, any]) => {
+          if (data.marketCap) {
+            stockData[companyId] = {
+              marketCap: data.marketCap,
+              change: data.change || 0,
+            };
+          }
+        });
+
+        return stockData;
+      }
+    } catch (error) {
+      console.error('Failed to fetch stock prices:', error);
+    }
+    return {};
+  }
+
+  // Update UI with stock data
+  function updateUI(stockData: Record<string, { marketCap: number; change: number }>) {
+    // Update valuations for rows that have real data
+    document.querySelectorAll('tr[data-id]').forEach((row) => {
+      const companyId = row.getAttribute('data-id');
+      if (!companyId) return;
+
+      const data = stockData[companyId];
+      if (data && data.marketCap) {
+        // Update valuation
+        const valuationEl = row.querySelector('.valuation');
+        if (valuationEl) {
+          valuationEl.textContent = formatValuation(data.marketCap);
+        }
+        row.setAttribute('data-valuation', String(data.marketCap));
+
+        // Update change percentage
+        const changeEl = row.querySelector('.change');
+        if (changeEl && data.change !== undefined) {
+          const change = data.change;
+          changeEl.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
+          changeEl.classList.remove('positive', 'negative', 'neutral');
+          changeEl.classList.add(change > 0 ? 'positive' : change < 0 ? 'negative' : 'neutral');
+        }
+      }
+    });
+
+    // Calculate total market cap
+    let total = 0;
+    document.querySelectorAll('tr[data-valuation]').forEach((row) => {
+      const val = parseFloat(row.getAttribute('data-valuation') || '0');
+      total += val;
+    });
+
+    const totalEl = document.getElementById('total-market-cap');
+    if (totalEl) {
+      totalEl.textContent = formatValuation(total);
+    }
+
+    // Sort by valuation (descending) initially
+    sortTable('valuation', 'desc');
+  }
+
+  // Fetch and update stock prices
+  async function updateStockPrices() {
+    const stockData = await fetchStockPrices();
+    updateUI(stockData);
+  }
+
+  // Sorting functionality
+  let currentSort = 'valuation';
+  let sortDirection = 'desc';
+
+  function sortTable(sortKey: string, direction?: string) {
+    const tbody = document.getElementById('table-body');
+    const headers = document.querySelectorAll('th[data-sort]');
+    if (!tbody) return;
+
+    if (direction) {
+      sortDirection = direction;
+    } else if (currentSort === sortKey) {
+      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortDirection = sortKey === 'valuation' ? 'desc' : 'asc';
+    }
+    currentSort = sortKey;
+
+    // Update header styles
+    headers.forEach((h) => h.classList.remove('sorted'));
+    document.querySelector(`th[data-sort="${sortKey}"]`)?.classList.add('sorted');
+
+    // Sort rows
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort((a, b) => {
+      let aVal: string | number = '';
+      let bVal: string | number = '';
+
+      switch (sortKey) {
+        case 'rank':
+          aVal = parseInt(a.querySelector('.rank')?.textContent || '0');
+          bVal = parseInt(b.querySelector('.rank')?.textContent || '0');
+          break;
+        case 'name':
+          aVal = a.querySelector('.company-name')?.textContent || '';
+          bVal = b.querySelector('.company-name')?.textContent || '';
+          break;
+        case 'valuation':
+          aVal = parseFloat(a.getAttribute('data-valuation') || '0');
+          bVal = parseFloat(b.getAttribute('data-valuation') || '0');
+          break;
+        case 'country':
+          aVal = a.querySelector('.country')?.textContent || '';
+          bVal = b.querySelector('.country')?.textContent || '';
+          break;
+        case 'type':
+          aVal = a.querySelector('.type-badge')?.textContent || '';
+          bVal = b.querySelector('.type-badge')?.textContent || '';
+          break;
+        default:
+          return 0;
+      }
+
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortDirection === 'asc' ? aVal - bVal : bVal - aVal;
+      }
+
+      const comparison = String(aVal).localeCompare(String(bVal));
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+
+    // Re-render rows
+    rows.forEach((row) => tbody.appendChild(row));
+
+    // Update rank numbers
+    tbody.querySelectorAll('tr').forEach((row, index) => {
+      const rankCell = row.querySelector('.rank');
+      if (rankCell) {
+        rankCell.textContent = String(index + 1).padStart(2, '0');
+      }
+    });
+  }
+
+  function setupSorting() {
+    const headers = document.querySelectorAll('th[data-sort]');
+    headers.forEach((header) => {
+      header.addEventListener('click', () => {
+        const sortKey = header.getAttribute('data-sort');
+        if (sortKey) sortTable(sortKey);
+      });
+    });
+  }
+
+  // Search and filter functionality
+  let currentSearch = '';
+  let currentCountry = '';
+  let currentType = '';
+
+  function filterTable() {
+    const tbody = document.getElementById('table-body');
+    if (!tbody) return;
+
+    const rows = tbody.querySelectorAll('tr');
+    let visibleCount = 0;
+
+    rows.forEach((row) => {
+      const companyName = row.querySelector('.company-name')?.textContent?.toLowerCase() || '';
+      const robotName = row.querySelector('.robot-name')?.textContent?.toLowerCase() || '';
+      const country = row.getAttribute('data-country') || '';
+      const type = row.getAttribute('data-type') || '';
+
+      const matchesSearch = !currentSearch ||
+        companyName.includes(currentSearch.toLowerCase()) ||
+        robotName.includes(currentSearch.toLowerCase());
+
+      const matchesCountry = !currentCountry || country === currentCountry;
+      const matchesType = !currentType || type === currentType;
+
+      if (matchesSearch && matchesCountry && matchesType) {
+        row.style.display = '';
+        visibleCount++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    // Update visible row ranks
+    let rank = 1;
+    rows.forEach((row) => {
+      if (row.style.display !== 'none') {
+        const rankCell = row.querySelector('.rank');
+        if (rankCell) {
+          rankCell.textContent = String(rank++).padStart(2, '0');
+        }
+      }
+    });
+  }
+
+  function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        currentSearch = (e.target as HTMLInputElement).value;
+        filterTable();
+      });
+    }
+  }
+
+  function setupCountryFilter() {
+    const filterBtn = document.getElementById('country-filter-btn');
+    const dropdown = document.getElementById('country-dropdown');
+    const items = dropdown?.querySelectorAll('.dropdown-item');
+
+    if (filterBtn && dropdown) {
+      filterBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('open');
+      });
+
+      document.addEventListener('click', () => {
+        dropdown.classList.remove('open');
+      });
+
+      items?.forEach((item) => {
+        item.addEventListener('click', () => {
+          const country = item.getAttribute('data-country') || '';
+          currentCountry = country;
+
+          // Update button text
+          const btnText = filterBtn.querySelector('span');
+          if (btnText) {
+            btnText.textContent = country || 'All Countries';
+          }
+
+          // Update active state
+          items.forEach((i) => i.classList.remove('active'));
+          item.classList.add('active');
+
+          dropdown.classList.remove('open');
+          filterTable();
+        });
+      });
+    }
+  }
+
+  function setupTypeToggle() {
+    const toggleBtns = document.querySelectorAll('.type-toggle .toggle-btn');
+
+    toggleBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const type = btn.getAttribute('data-type') || '';
+        currentType = type;
+
+        // Update active state
+        toggleBtns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        filterTable();
+      });
+    });
+  }
+
+  // Sticky header detection
+  function setupStickyHeader() {
+    const tableHeader = document.querySelector('.table-header');
+    if (!tableHeader) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // When the sentinel goes out of view (header is sticky), add class
+        tableHeader.classList.toggle('is-sticky', !entry.isIntersecting);
+      },
+      {
+        rootMargin: '-58px 0px 0px 0px', // Account for header height
+        threshold: 0
+      }
+    );
+
+    // Create a sentinel element just above the table header
+    const sentinel = document.createElement('div');
+    sentinel.className = 'sticky-sentinel';
+    sentinel.style.cssText = 'position: absolute; top: 0; left: 0; right: 0; height: 1px; pointer-events: none;';
+    tableHeader.parentElement?.insertBefore(sentinel, tableHeader);
+    observer.observe(sentinel);
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    updateStockPrices();
+    setupSorting();
+    setupSearch();
+    setupCountryFilter();
+    setupTypeToggle();
+    setupStickyHeader();
+  });
+</script>

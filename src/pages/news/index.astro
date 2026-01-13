@@ -1,0 +1,318 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Get all published articles, sorted by date
+const articles = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Format date
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+// SEO metadata
+const siteUrl = "https://xmaquina-marketcap.netlify.app";
+const pageTitle = "News & Analysis | XMAQUINA Market Cap";
+const pageDescription = "Latest news, analysis, and insights on humanoid robotics companies, market valuations, and industry trends.";
+const pageKeywords = "humanoid robots news, robotics industry analysis, Tesla Optimus news, Figure AI updates, robotics market trends";
+
+// Structured data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": pageTitle,
+  "description": pageDescription,
+  "url": `${siteUrl}/news`,
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "XMAQUINA Market Cap",
+    "url": siteUrl
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": siteUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "News",
+        "item": `${siteUrl}/news`
+      }
+    ]
+  }
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  structuredData={structuredData}
+>
+  <div class="news-page">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a>
+        <span class="separator">/</span>
+        <span class="current">News</span>
+      </nav>
+
+      <header class="page-header">
+        <h1>News & Analysis</h1>
+        <p class="subtitle">Latest insights on humanoid robotics companies and industry trends</p>
+      </header>
+
+      {articles.length === 0 ? (
+        <div class="empty-state">
+          <h2>No articles yet</h2>
+          <p>Check back soon for the latest news and analysis.</p>
+        </div>
+      ) : (
+        <div class="articles-grid">
+          {articles.map((article) => (
+            <article class="article-card">
+              {article.data.image && (
+                <a href={`/news/${article.slug}`} class="article-image">
+                  <img src={article.data.image} alt={article.data.title} loading="lazy" />
+                </a>
+              )}
+              <div class="article-content">
+                <div class="article-meta">
+                  <time datetime={article.data.pubDate.toISOString()}>
+                    {formatDate(article.data.pubDate)}
+                  </time>
+                  <span class="author">by {article.data.author}</span>
+                </div>
+                <h2 class="article-title">
+                  <a href={`/news/${article.slug}`}>{article.data.title}</a>
+                </h2>
+                <p class="article-description">{article.data.description}</p>
+                {article.data.companies && article.data.companies.length > 0 && (
+                  <div class="article-tags">
+                    {article.data.companies.map((company: string) => (
+                      <a href={`/company/${company}`} class="tag">{company}</a>
+                    ))}
+                  </div>
+                )}
+                <a href={`/news/${article.slug}`} class="read-more">
+                  Read article →
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .news-page {
+    padding: var(--spacing-xl) 0 var(--spacing-3xl);
+    min-height: 60vh;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-primary);
+  }
+
+  .breadcrumb .separator {
+    opacity: 0.5;
+  }
+
+  .breadcrumb .current {
+    color: var(--color-text);
+  }
+
+  .page-header {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .page-header .subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: var(--spacing-3xl) var(--spacing-lg);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+  }
+
+  .empty-state h2 {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .empty-state p {
+    color: var(--color-text-muted);
+  }
+
+  .articles-grid {
+    display: grid;
+    gap: var(--spacing-xl);
+  }
+
+  .article-card {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .article-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .article-image {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+  }
+
+  .article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .article-card:hover .article-image img {
+    transform: scale(1.05);
+  }
+
+  .article-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .article-meta .author::before {
+    content: '•';
+    margin-right: var(--spacing-sm);
+  }
+
+  .article-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.3;
+  }
+
+  .article-title a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .article-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .article-description {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+    flex: 1;
+  }
+
+  .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: all 0.2s ease;
+  }
+
+  .tag:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .read-more {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-primary);
+    font-weight: 500;
+    text-decoration: none;
+    transition: gap 0.2s ease;
+  }
+
+  .read-more:hover {
+    gap: var(--spacing-xs);
+  }
+
+  @media (max-width: 768px) {
+    .page-header h1 {
+      font-size: 2rem;
+    }
+
+    .article-card {
+      grid-template-columns: 1fr;
+    }
+
+    .article-image {
+      aspect-ratio: 16 / 9;
+    }
+
+    .article-title {
+      font-size: 1.25rem;
+    }
+  }
+</style>

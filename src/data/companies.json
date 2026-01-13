@@ -1,0 +1,1538 @@
+{
+  "companies": [
+    {
+      "id": "tesla",
+      "name": "Tesla",
+      "ticker": "TSLA",
+      "exchange": "NASDAQ",
+      "type": "public",
+      "country": "USA",
+      "founded": 2003,
+      "flagshipRobot": "Optimus",
+      "website": "https://tesla.com",
+      "valuationManual": null,
+      "description": "Tesla is pioneering humanoid robotics with Optimus, a general-purpose robot designed for manufacturing and household tasks. Leveraging Tesla's expertise in AI, autonomous systems, and manufacturing at scale.",
+      "ceo": "Elon Musk",
+      "headquarters": "Austin, Texas, USA",
+      "coordinates": { "lat": 30.2672, "lng": -97.7431 },
+      "twitter": "https://twitter.com/Tesla",
+      "linkedin": "https://linkedin.com/company/tesla-motors",
+      "valuationHistory": [
+        {"date": "2022-01", "value": 850000000000},
+        {"date": "2022-06", "value": 700000000000},
+        {"date": "2023-01", "value": 380000000000},
+        {"date": "2023-06", "value": 800000000000},
+        {"date": "2024-01", "value": 600000000000},
+        {"date": "2024-06", "value": 580000000000},
+        {"date": "2025-01", "value": 1100000000000}
+      ],
+      "robots": [
+        {
+          "id": "optimus-gen2",
+          "name": "Optimus Gen 2",
+          "tagline": "A general-purpose humanoid robot designed for manufacturing, logistics, and everyday tasks, leveraging Tesla's AI and autonomous systems expertise.",
+          "status": "prototype",
+          "image": "/robots/tesla.webp",
+          "specifications": {
+            "height": { "value": 173, "unit": "cm" },
+            "weight": { "value": 57, "unit": "kg" },
+            "payload": { "value": 20, "unit": "kg" },
+            "speed": { "value": 8, "unit": "km/h" },
+            "dof": 28,
+            "batteryLife": { "value": 8, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Tesla Vision cameras",
+              "Force/torque sensors in hands",
+              "IMU sensors"
+            ],
+            "connectivity": [
+              "WiFi",
+              "5G cellular"
+            ],
+            "ai": [
+              "Tesla FSD neural networks",
+              "End-to-end learning",
+              "Real-time environment mapping"
+            ]
+          },
+          "features": [
+            {
+              "title": "Tesla AI Integration",
+              "description": "Powered by the same AI stack that drives Tesla's Full Self-Driving technology, enabling real-time learning and adaptation."
+            },
+            {
+              "title": "Actuator Technology",
+              "description": "Custom-designed actuators built for efficiency, durability, and precise control at scale."
+            }
+          ],
+          "applications": ["Manufacturing", "Logistics", "Household tasks", "Hazardous environments"],
+          "videos": [
+            {
+              "id": "cpraXaw7dyc",
+              "title": "Optimus - Gen 2",
+              "description": "Tesla's second generation Optimus robot demonstration"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "figure-ai",
+      "name": "Figure AI",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "USA",
+      "founded": 2022,
+      "flagshipRobot": "Figure 02",
+      "website": "https://figure.ai",
+      "valuationManual": 39000000000,
+      "description": "Figure AI is building the world's first commercially viable autonomous humanoid robot. Figure 02 features advanced AI capabilities through partnership with OpenAI, designed for logistics and manufacturing applications.",
+      "ceo": "Brett Adcock",
+      "headquarters": "Sunnyvale, California, USA",
+      "coordinates": { "lat": 37.3688, "lng": -122.0363 },
+      "twitter": "https://twitter.com/Figure_robot",
+      "linkedin": "https://linkedin.com/company/figureai",
+      "valuationHistory": [
+        {"date": "2023-02", "value": 500000000, "event": "Series A"},
+        {"date": "2023-10", "value": 2600000000, "event": "Series B"},
+        {"date": "2024-02", "value": 2600000000, "event": "OpenAI Partnership"},
+        {"date": "2024-08", "value": 5000000000, "event": "Series C"},
+        {"date": "2025-02", "value": 39000000000, "event": "Series D"}
+      ],
+      "robots": [
+        {
+          "id": "figure-02",
+          "name": "Figure 02",
+          "tagline": "The world's most advanced commercially viable humanoid robot, featuring OpenAI-powered conversational AI and autonomous task execution.",
+          "status": "commercial",
+          "image": "/robots/figure-ai.webp",
+          "specifications": {
+            "height": { "value": 167, "unit": "cm" },
+            "weight": { "value": 60, "unit": "kg" },
+            "payload": { "value": 20, "unit": "kg" },
+            "speed": { "value": 4.8, "unit": "km/h" },
+            "dof": 41,
+            "batteryLife": { "value": 5, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "RGB cameras",
+              "Depth sensors",
+              "Microphones for voice interaction",
+              "Force/torque sensors"
+            ],
+            "connectivity": [
+              "WiFi 6",
+              "Ethernet",
+              "5G"
+            ],
+            "ai": [
+              "OpenAI partnership",
+              "Large language model integration",
+              "Visual reasoning",
+              "Speech-to-action"
+            ]
+          },
+          "features": [
+            {
+              "title": "OpenAI Integration",
+              "description": "Partnership with OpenAI enables natural language understanding and conversational interaction for intuitive human-robot collaboration."
+            },
+            {
+              "title": "Commercial Ready",
+              "description": "Deployed at BMW manufacturing facilities, Figure 02 is designed for real-world industrial applications."
+            }
+          ],
+          "applications": ["Manufacturing", "Logistics", "Warehouse automation"],
+          "videos": [
+            {
+              "id": "Sq1QZB5baNw",
+              "title": "Figure 02 - The Next Generation",
+              "description": "Introduction to Figure AI's second generation humanoid robot"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1x-technologies",
+      "name": "1X Technologies",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "Norway",
+      "founded": 2014,
+      "flagshipRobot": "NEO",
+      "website": "https://1x.tech",
+      "valuationManual": 10000000000,
+      "description": "1X Technologies creates humanoid robots designed to work alongside humans. Their NEO robot is built for household and commercial applications, backed by OpenAI and featuring advanced embodied AI.",
+      "ceo": "Bernt Bornich",
+      "headquarters": "Moss, Norway",
+      "coordinates": { "lat": 59.4330, "lng": 10.6580 },
+      "twitter": "https://twitter.com/1aboratoriet",
+      "linkedin": "https://linkedin.com/company/1x-technologies",
+      "valuationHistory": [
+        {"date": "2022-03", "value": 100000000, "event": "Series A"},
+        {"date": "2023-03", "value": 500000000, "event": "Series A2"},
+        {"date": "2024-01", "value": 1000000000, "event": "Series B"},
+        {"date": "2024-11", "value": 2400000000, "event": "Series C"},
+        {"date": "2025-06", "value": 10000000000, "event": "Series D"}
+      ],
+      "robots": [
+        {
+          "id": "neo",
+          "name": "NEO",
+          "tagline": "A human-scale bipedal robot designed for safe operation in homes and workplaces, featuring embodied AI for natural interaction.",
+          "status": "prototype",
+          "image": "/robots/1x-technologies.webp",
+          "specifications": {
+            "height": { "value": 165, "unit": "cm" },
+            "weight": { "value": 30, "unit": "kg" },
+            "payload": { "value": 20, "unit": "kg" },
+            "speed": { "value": 4, "unit": "km/h" },
+            "dof": 37,
+            "batteryLife": { "value": 4, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "RGB-D cameras",
+              "Tactile sensors in hands",
+              "Proprioceptive sensors"
+            ],
+            "connectivity": [
+              "WiFi",
+              "Bluetooth",
+              "Cloud connectivity"
+            ],
+            "ai": [
+              "OpenAI partnership",
+              "Embodied foundation models",
+              "Sim-to-real learning"
+            ]
+          },
+          "features": [
+            {
+              "title": "Safe by Design",
+              "description": "Built with soft, lightweight materials to operate safely alongside humans in homes and workplaces."
+            },
+            {
+              "title": "OpenAI Partnership",
+              "description": "Backed by OpenAI's strategic investment, leveraging cutting-edge AI for embodied intelligence."
+            }
+          ],
+          "applications": ["Home assistance", "Elder care", "Light industrial", "Hospitality"],
+          "videos": [
+            {
+              "id": "LTYMWadOW7c",
+              "title": "Meet NEO",
+              "description": "Introduction to 1X Technologies' NEO humanoid robot for home assistance"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ubtech",
+      "name": "UBTECH",
+      "ticker": "9880",
+      "exchange": "HKEX",
+      "type": "public",
+      "country": "China",
+      "founded": 2012,
+      "flagshipRobot": "Walker S2",
+      "website": "https://www.ubtrobot.com",
+      "valuationManual": null,
+      "description": "UBTECH Robotics is a global leader in intelligent humanoid robots and AI education. Walker S2 is their flagship industrial humanoid, designed for manufacturing and service applications.",
+      "ceo": "James Zhou",
+      "headquarters": "Shenzhen, China",
+      "coordinates": { "lat": 22.5431, "lng": 114.0579 },
+      "twitter": "https://twitter.com/ABOROBOT",
+      "linkedin": "https://linkedin.com/company/ubtech-robotics",
+      "valuationHistory": [
+        {"date": "2024-01", "value": 5000000000},
+        {"date": "2024-06", "value": 6500000000},
+        {"date": "2024-12", "value": 8000000000},
+        {"date": "2025-01", "value": 9500000000}
+      ],
+      "robots": [
+        {
+          "id": "walker-s2",
+          "name": "Walker S2",
+          "tagline": "An industrial-grade humanoid robot designed for manufacturing and service applications with advanced dexterity and intelligence.",
+          "status": "commercial",
+          "image": "/robots/ubtech.webp",
+          "specifications": {
+            "height": { "value": 170, "unit": "cm" },
+            "weight": { "value": 60, "unit": "kg" },
+            "payload": { "value": 10, "unit": "kg" },
+            "speed": { "value": 5, "unit": "km/h" },
+            "dof": 41,
+            "batteryLife": { "value": 3, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "RGB-D cameras",
+              "LiDAR",
+              "6-axis force sensors",
+              "IMU"
+            ],
+            "connectivity": [
+              "WiFi 6",
+              "5G",
+              "Ethernet"
+            ],
+            "ai": [
+              "Large language model integration",
+              "Visual reasoning",
+              "Multi-modal perception"
+            ]
+          },
+          "features": [
+            {
+              "title": "Industrial Ready",
+              "description": "Deployed in automotive manufacturing facilities with NIO, demonstrating commercial viability in demanding industrial environments."
+            },
+            {
+              "title": "Advanced Manipulation",
+              "description": "Features 41 degrees of freedom including highly dexterous hands for complex assembly and manipulation tasks."
+            }
+          ],
+          "applications": ["Manufacturing", "Logistics", "Retail", "Service"],
+          "videos": [
+            {
+              "id": "nzflxCHT4vw",
+              "title": "Walker S2 Mass Production",
+              "description": "UBTECH's Walker S2 humanoid robot mass production and delivery milestone"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unitree",
+      "name": "Unitree Robotics",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "China",
+      "founded": 2016,
+      "flagshipRobot": "H1",
+      "website": "https://www.unitree.com",
+      "valuationManual": 7000000000,
+      "description": "Unitree Robotics specializes in high-performance humanoid and quadruped robots. The H1 humanoid features advanced locomotion and is one of the fastest humanoid robots available.",
+      "ceo": "Wang Xingxing",
+      "headquarters": "Hangzhou, China",
+      "coordinates": { "lat": 30.2741, "lng": 120.1551 },
+      "twitter": "https://twitter.com/UnitreeRobotics",
+      "linkedin": "https://linkedin.com/company/unitree-robotics",
+      "valuationHistory": [
+        {"date": "2022-01", "value": 500000000, "event": "Series B"},
+        {"date": "2023-06", "value": 1500000000, "event": "Series C"},
+        {"date": "2024-06", "value": 3500000000, "event": "Series D"},
+        {"date": "2025-01", "value": 7000000000, "event": "Series E"}
+      ],
+      "robots": [
+        {
+          "id": "h1",
+          "name": "H1",
+          "tagline": "The world's fastest bipedal humanoid robot, capable of running at 3.3 m/s with exceptional balance and agility.",
+          "status": "commercial",
+          "image": "/robots/unitree.webp",
+          "specifications": {
+            "height": { "value": 180, "unit": "cm" },
+            "weight": { "value": 47, "unit": "kg" },
+            "payload": { "value": 30, "unit": "kg" },
+            "speed": { "value": 12, "unit": "km/h" },
+            "dof": 25,
+            "batteryLife": { "value": 2, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "3D LiDAR",
+              "Depth camera",
+              "IMU sensors"
+            ],
+            "connectivity": [
+              "WiFi",
+              "Ethernet",
+              "4G LTE"
+            ],
+            "ai": [
+              "Reinforcement learning locomotion",
+              "Real-time terrain adaptation"
+            ]
+          },
+          "features": [
+            {
+              "title": "World's Fastest",
+              "description": "H1 holds the record for the fastest full-size bipedal humanoid robot, capable of running at speeds up to 3.3 m/s."
+            },
+            {
+              "title": "Affordable Innovation",
+              "description": "Priced competitively starting at $90,000, making humanoid robotics more accessible for research and commercial applications."
+            }
+          ],
+          "applications": ["Research", "Industrial inspection", "Entertainment", "Security"],
+          "videos": []
+        },
+        {
+          "id": "g1",
+          "name": "G1",
+          "tagline": "A compact and affordable humanoid robot designed for mass adoption in education, research, and light industrial applications.",
+          "status": "commercial",
+          "image": "/robots/unitree.webp",
+          "specifications": {
+            "height": { "value": 127, "unit": "cm" },
+            "weight": { "value": 35, "unit": "kg" },
+            "payload": { "value": 3, "unit": "kg" },
+            "speed": { "value": 7.2, "unit": "km/h" },
+            "dof": 23,
+            "batteryLife": { "value": 2, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Intel RealSense depth camera",
+              "3D LiDAR",
+              "IMU"
+            ],
+            "connectivity": [
+              "WiFi",
+              "Bluetooth",
+              "USB"
+            ],
+            "ai": [
+              "Imitation learning",
+              "Sim-to-real transfer"
+            ]
+          },
+          "features": [
+            {
+              "title": "Ultra Affordable",
+              "description": "Starting at just $16,000, G1 democratizes access to humanoid robotics for researchers and developers."
+            },
+            {
+              "title": "Highly Dexterous",
+              "description": "Features advanced hand manipulation with 11 DoF per hand for complex object handling."
+            }
+          ],
+          "applications": ["Education", "Research", "Light manufacturing", "Service"],
+          "videos": [
+            {
+              "id": "lOwUfM6QmLI",
+              "title": "G1 Side Flip",
+              "description": "Unitree G1 performs world's first humanoid robot side flip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apptronik",
+      "name": "Apptronik",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "USA",
+      "founded": 2016,
+      "flagshipRobot": "Apollo",
+      "website": "https://apptronik.com",
+      "valuationManual": 5500000000,
+      "description": "Apptronik is a leader in AI-powered humanoid robotics. Its humanoid robot, Apollo, is versatile and modular. Valued at $1.5 billion, Apptronik offers an attractive risk-reward profile with substantial upside potential.",
+      "ceo": "Jeff Cardenas",
+      "headquarters": "Austin, Texas, USA",
+      "coordinates": { "lat": 30.2672, "lng": -97.7431 },
+      "twitter": "https://twitter.com/Apptronik",
+      "linkedin": "https://linkedin.com/company/apptronik",
+      "valuationHistory": [
+        {"date": "2022-06", "value": 100000000, "event": "Series A"},
+        {"date": "2023-08", "value": 600000000, "event": "Series B"},
+        {"date": "2024-06", "value": 1500000000, "event": "Series C"},
+        {"date": "2025-02", "value": 5500000000, "event": "Series D"}
+      ],
+      "robots": [
+        {
+          "id": "apollo",
+          "name": "Apollo",
+          "tagline": "Apollo's human-like form allows it to navigate and operate efficiently in environments built for people, powered by advanced mobility and AI-driven interaction.",
+          "status": "prototype",
+          "image": "/robots/apptronik.webp",
+          "specifications": {
+            "height": { "value": 173, "unit": "cm" },
+            "weight": { "value": 73, "unit": "kg" },
+            "reach": { "value": 1400, "unit": "mm" },
+            "payload": { "value": 25, "unit": "kg", "note": "typically 15 kg" },
+            "maxTCPSpeed": { "value": 4.5, "unit": "m/s" },
+            "repeatability": { "value": 0.01, "unit": "mm", "prefix": "±" },
+            "dof": 36,
+            "batteryLife": { "value": 4, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Integrated 3D camera",
+              "360° mic array",
+              "6-DOF force-torque skin for hand guidance"
+            ],
+            "connectivity": [
+              "EtherCAT",
+              "Modbus",
+              "CAN Bus",
+              "IO-Link",
+              "GPIO",
+              "Compressed air lines"
+            ],
+            "ai": [
+              "Google DeepMind partnership"
+            ]
+          },
+          "features": [
+            {
+              "title": "A modular robot",
+              "description": "Its modular, versatile build supports swappable parts for task-specific optimization and deployment as bipedal, wheeled, or stationary units."
+            },
+            {
+              "title": "Powerful AI",
+              "description": "Apollo partners with Google DeepMind for its brain, enabling advanced reasoning and task execution."
+            }
+          ],
+          "applications": ["Manufacturing", "Logistics", "Warehouse", "Retail"],
+          "videos": []
+        }
+      ]
+    },
+    {
+      "id": "hyundai",
+      "name": "Hyundai Motor",
+      "ticker": "005380.KS",
+      "exchange": "KRX",
+      "type": "public",
+      "country": "South Korea",
+      "founded": 1967,
+      "flagshipRobot": "Atlas (via Boston Dynamics)",
+      "website": "https://hyundai.com",
+      "valuationManual": null,
+      "description": "Hyundai Motor Company owns Boston Dynamics and is investing heavily in robotics for future mobility solutions. Through Boston Dynamics, they develop the Atlas humanoid robot.",
+      "ceo": "Jaehoon Chang",
+      "headquarters": "Seoul, South Korea",
+      "coordinates": { "lat": 37.5665, "lng": 126.9780 },
+      "twitter": "https://twitter.com/Hyundai",
+      "linkedin": "https://linkedin.com/company/hyundai",
+      "valuationHistory": [
+        {"date": "2022-01", "value": 35000000000},
+        {"date": "2022-06", "value": 30000000000},
+        {"date": "2023-01", "value": 32000000000},
+        {"date": "2023-06", "value": 38000000000},
+        {"date": "2024-01", "value": 42000000000},
+        {"date": "2024-06", "value": 45000000000},
+        {"date": "2025-01", "value": 48000000000}
+      ],
+      "robots": [
+        {
+          "id": "atlas-hyundai",
+          "name": "Atlas (Boston Dynamics)",
+          "tagline": "Through ownership of Boston Dynamics, Hyundai has access to the world's most dynamic humanoid robot for future mobility and manufacturing applications.",
+          "status": "commercial",
+          "image": "/robots/boston-dynamics.webp",
+          "specifications": {
+            "height": { "value": 150, "unit": "cm" },
+            "weight": { "value": 89, "unit": "kg" },
+            "payload": { "value": 11, "unit": "kg" },
+            "speed": { "value": 5.4, "unit": "km/h" },
+            "dof": 28,
+            "batteryLife": { "value": 1, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Stereo vision",
+              "LIDAR",
+              "Proprioceptive sensors",
+              "Force sensors in limbs"
+            ],
+            "connectivity": [
+              "WiFi",
+              "Ethernet",
+              "Custom telemetry"
+            ],
+            "ai": [
+              "Model predictive control",
+              "Whole-body motion planning",
+              "Real-time balance optimization"
+            ]
+          },
+          "features": [
+            {
+              "title": "Hyundai Ownership",
+              "description": "Hyundai acquired Boston Dynamics in 2020, integrating advanced robotics into their future mobility strategy."
+            },
+            {
+              "title": "Electric Atlas",
+              "description": "The new all-electric Atlas features a broader range of motion than any human, designed for real-world commercial applications."
+            }
+          ],
+          "applications": ["Automotive manufacturing", "Research", "Industrial inspection", "Logistics"]
+        }
+      ]
+    },
+    {
+      "id": "boston-dynamics",
+      "name": "Boston Dynamics",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "USA",
+      "founded": 1992,
+      "flagshipRobot": "Atlas",
+      "website": "https://bostondynamics.com",
+      "valuationManual": 5000000000,
+      "description": "Boston Dynamics is a pioneer in advanced robotics, known for creating highly dynamic robots. Atlas is their flagship humanoid, capable of parkour-level athleticism and manipulation tasks.",
+      "ceo": "Robert Playter",
+      "headquarters": "Waltham, Massachusetts, USA",
+      "coordinates": { "lat": 42.3765, "lng": -71.2356 },
+      "twitter": "https://twitter.com/BostonDynamics",
+      "linkedin": "https://linkedin.com/company/boston-dynamics",
+      "valuationHistory": [
+        {"date": "2017-06", "value": 100000000, "event": "SoftBank Acquisition"},
+        {"date": "2020-12", "value": 1100000000, "event": "Hyundai Acquisition"},
+        {"date": "2022-06", "value": 2000000000, "event": "Internal Valuation"},
+        {"date": "2024-01", "value": 3500000000, "event": "Internal Valuation"},
+        {"date": "2025-01", "value": 5000000000, "event": "Current Estimate"}
+      ],
+      "robots": [
+        {
+          "id": "atlas",
+          "name": "Atlas",
+          "tagline": "The world's most dynamic humanoid robot, capable of parkour, backflips, and complex manipulation tasks with unmatched agility.",
+          "status": "commercial",
+          "image": "/robots/boston-dynamics.webp",
+          "specifications": {
+            "height": { "value": 150, "unit": "cm" },
+            "weight": { "value": 89, "unit": "kg" },
+            "payload": { "value": 11, "unit": "kg" },
+            "speed": { "value": 5.4, "unit": "km/h" },
+            "dof": 28,
+            "batteryLife": { "value": 1, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Stereo vision",
+              "LIDAR",
+              "Proprioceptive sensors",
+              "Force sensors in limbs"
+            ],
+            "connectivity": [
+              "WiFi",
+              "Ethernet",
+              "Custom telemetry"
+            ],
+            "ai": [
+              "Model predictive control",
+              "Whole-body motion planning",
+              "Real-time balance optimization"
+            ]
+          },
+          "features": [
+            {
+              "title": "Unmatched Agility",
+              "description": "Atlas can perform parkour, backflips, and navigate complex terrain with human-like fluidity and balance."
+            },
+            {
+              "title": "Electric Evolution",
+              "description": "The new all-electric Atlas features a broader range of motion than any human, designed for real-world commercial applications."
+            }
+          ],
+          "applications": ["Research", "Search and rescue", "Industrial inspection", "Entertainment"],
+          "videos": [
+            {
+              "id": "-9EM5_VFlt8",
+              "title": "Farewell to HD Atlas",
+              "description": "Boston Dynamics bids farewell to the hydraulic Atlas robot"
+            },
+            {
+              "id": "29ECwExc-_M",
+              "title": "All New Atlas",
+              "description": "Introducing the all-electric Atlas robot"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "xpeng",
+      "name": "XPeng",
+      "ticker": "XPEV",
+      "exchange": "NYSE",
+      "type": "public",
+      "country": "China",
+      "founded": 2014,
+      "flagshipRobot": "Iron",
+      "website": "https://xpeng.com",
+      "valuationManual": null,
+      "description": "XPeng is a leading Chinese EV maker expanding into humanoid robotics. Their Iron robot is designed for manufacturing and logistics, leveraging their expertise in AI and autonomous systems.",
+      "ceo": "He Xiaopeng",
+      "headquarters": "Guangzhou, China",
+      "coordinates": { "lat": 23.1291, "lng": 113.2644 },
+      "twitter": "https://twitter.com/XPengMotors",
+      "linkedin": "https://linkedin.com/company/xiaopeng-motors",
+      "valuationHistory": [
+        {"date": "2022-01", "value": 25000000000},
+        {"date": "2022-06", "value": 15000000000},
+        {"date": "2023-01", "value": 8000000000},
+        {"date": "2023-06", "value": 12000000000},
+        {"date": "2024-01", "value": 10000000000},
+        {"date": "2024-06", "value": 11000000000},
+        {"date": "2025-01", "value": 14000000000}
+      ],
+      "robots": [
+        {
+          "id": "iron",
+          "name": "Iron",
+          "tagline": "A versatile humanoid robot designed for manufacturing and logistics, leveraging XPeng's expertise in AI and autonomous systems.",
+          "status": "prototype",
+          "image": "/robots/xpeng.webp",
+          "specifications": {
+            "height": { "value": 178, "unit": "cm" },
+            "weight": { "value": 70, "unit": "kg" },
+            "payload": { "value": 35, "unit": "kg" },
+            "speed": { "value": 6, "unit": "km/h" },
+            "dof": 60,
+            "batteryLife": { "value": 4, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Binocular vision",
+              "LiDAR",
+              "Ultra-wideband sensors",
+              "6-axis force sensors"
+            ],
+            "connectivity": [
+              "WiFi 6",
+              "5G",
+              "Cloud connectivity"
+            ],
+            "ai": [
+              "XPeng AI platform",
+              "Autonomous navigation",
+              "Object recognition"
+            ]
+          },
+          "features": [
+            {
+              "title": "EV Expertise",
+              "description": "Built on XPeng's electric vehicle technology, featuring efficient actuators and advanced battery management."
+            },
+            {
+              "title": "Factory Ready",
+              "description": "Designed specifically for manufacturing environments with heavy payload capacity and precision manipulation."
+            }
+          ],
+          "applications": ["Manufacturing", "Logistics", "Automotive assembly"]
+        }
+      ]
+    },
+    {
+      "id": "xiaomi",
+      "name": "Xiaomi",
+      "ticker": "1810",
+      "exchange": "HKEX",
+      "type": "public",
+      "country": "China",
+      "founded": 2010,
+      "flagshipRobot": "CyberOne",
+      "website": "https://xiaomi.com",
+      "valuationManual": null,
+      "description": "Xiaomi is a global technology company expanding into humanoid robotics with CyberOne. The robot features emotion recognition and advanced AI capabilities for future consumer applications.",
+      "ceo": "Lei Jun",
+      "headquarters": "Beijing, China",
+      "coordinates": { "lat": 39.9042, "lng": 116.4074 },
+      "twitter": "https://twitter.com/Xiaomi",
+      "linkedin": "https://linkedin.com/company/xiaomi",
+      "valuationHistory": [
+        {"date": "2022-01", "value": 55000000000},
+        {"date": "2022-06", "value": 35000000000},
+        {"date": "2023-01", "value": 40000000000},
+        {"date": "2023-06", "value": 45000000000},
+        {"date": "2024-01", "value": 50000000000},
+        {"date": "2024-06", "value": 55000000000},
+        {"date": "2025-01", "value": 95000000000}
+      ],
+      "robots": [
+        {
+          "id": "cyberone",
+          "name": "CyberOne",
+          "tagline": "A humanoid robot with advanced emotion recognition and natural interaction capabilities, designed for future consumer applications.",
+          "status": "prototype",
+          "image": "/robots/xiaomi.webp",
+          "specifications": {
+            "height": { "value": 177, "unit": "cm" },
+            "weight": { "value": 52, "unit": "kg" },
+            "payload": { "value": 1.5, "unit": "kg" },
+            "speed": { "value": 3.6, "unit": "km/h" },
+            "dof": 21,
+            "batteryLife": { "value": 2, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Mi-Sense depth camera",
+              "Spatial audio",
+              "Emotion recognition AI"
+            ],
+            "connectivity": [
+              "WiFi",
+              "Bluetooth",
+              "Xiaomi IoT ecosystem"
+            ],
+            "ai": [
+              "Emotion recognition",
+              "Semantic recognition",
+              "Natural language interaction"
+            ]
+          },
+          "features": [
+            {
+              "title": "Emotion Recognition",
+              "description": "Can detect and respond to human emotions through facial expression analysis and voice pattern recognition."
+            },
+            {
+              "title": "Consumer Focus",
+              "description": "Designed with Xiaomi's consumer electronics expertise for future home companion applications."
+            }
+          ],
+          "applications": ["Home companion", "Entertainment", "Research", "Healthcare"]
+        }
+      ]
+    },
+    {
+      "id": "neura-robotics",
+      "name": "Neura Robotics",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "Germany",
+      "founded": 2019,
+      "flagshipRobot": "4NE-1",
+      "website": "https://neura-robotics.com",
+      "valuationManual": 9700000000,
+      "description": "Neura Robotics is a German company building cognitive humanoid robots. Their 4NE-1 robot combines advanced AI with human-like form for industrial and service applications.",
+      "ceo": "David Reger",
+      "headquarters": "Metzingen, Germany",
+      "coordinates": { "lat": 48.5370, "lng": 9.2830 },
+      "twitter": "https://twitter.com/NeuraRobotics",
+      "linkedin": "https://linkedin.com/company/neura-robotics",
+      "valuationHistory": [
+        {"date": "2022-06", "value": 216000000, "event": "Series A"},
+        {"date": "2023-06", "value": 432000000, "event": "Series A Extension"},
+        {"date": "2024-06", "value": 1080000000, "event": "Series B"},
+        {"date": "2025-01", "value": 9700000000, "event": "Series B Extension"}
+      ],
+      "robots": [
+        {
+          "id": "4ne-1",
+          "name": "4NE-1",
+          "tagline": "A cognitive humanoid robot combining advanced AI with human-like form for industrial and service applications across diverse environments.",
+          "status": "prototype",
+          "image": "/robots/neura-robotics.webp",
+          "specifications": {
+            "height": { "value": 180, "unit": "cm" },
+            "weight": { "value": 75, "unit": "kg" },
+            "payload": { "value": 20, "unit": "kg" },
+            "speed": { "value": 5, "unit": "km/h" },
+            "dof": 42,
+            "batteryLife": { "value": 4, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "3D vision system",
+              "Force-torque sensors",
+              "Proximity sensors",
+              "Haptic feedback"
+            ],
+            "connectivity": [
+              "WiFi 6",
+              "5G",
+              "EtherCAT",
+              "OPC UA"
+            ],
+            "ai": [
+              "Cognitive AI platform",
+              "Natural language understanding",
+              "Predictive task planning"
+            ]
+          },
+          "features": [
+            {
+              "title": "Cognitive Intelligence",
+              "description": "Features Neura's proprietary cognitive AI platform enabling understanding, reasoning, and adaptive task execution."
+            },
+            {
+              "title": "Human Collaboration",
+              "description": "Designed for safe human-robot collaboration with advanced safety systems and intuitive interaction."
+            }
+          ],
+          "applications": ["Manufacturing", "Healthcare", "Logistics", "Service"]
+        }
+      ]
+    },
+    {
+      "id": "agility-robotics",
+      "name": "Agility Robotics",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "USA",
+      "founded": 2015,
+      "flagshipRobot": "Digit",
+      "website": "https://agilityrobotics.com",
+      "valuationManual": 2120000000,
+      "description": "Agility Robotics builds Digit, a human-centric bipedal robot designed for logistics and warehouse operations. Partnered with Amazon for deployment in fulfillment centers.",
+      "ceo": "Damion Shelton",
+      "headquarters": "Corvallis, Oregon, USA",
+      "coordinates": { "lat": 44.5646, "lng": -123.2620 },
+      "twitter": "https://twitter.com/aaborotics",
+      "linkedin": "https://linkedin.com/company/agility-robotics",
+      "valuationHistory": [
+        {"date": "2021-06", "value": 150000000, "event": "Series A"},
+        {"date": "2022-09", "value": 500000000, "event": "Series B"},
+        {"date": "2024-04", "value": 1200000000, "event": "Amazon Partnership"},
+        {"date": "2025-01", "value": 2120000000, "event": "Series C"}
+      ],
+      "robots": [
+        {
+          "id": "digit",
+          "name": "Digit",
+          "tagline": "A human-centric bipedal robot purpose-built for logistics operations, featuring advanced mobility and manipulation for warehouse environments.",
+          "status": "commercial",
+          "image": "/robots/agility-robotics.webp",
+          "specifications": {
+            "height": { "value": 175, "unit": "cm" },
+            "weight": { "value": 65, "unit": "kg" },
+            "payload": { "value": 16, "unit": "kg" },
+            "speed": { "value": 5.4, "unit": "km/h" },
+            "dof": 30,
+            "batteryLife": { "value": 16, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "LiDAR",
+              "RGB-D cameras",
+              "IMU sensors",
+              "Proprioceptive sensors"
+            ],
+            "connectivity": [
+              "WiFi",
+              "4G LTE",
+              "Fleet management API"
+            ],
+            "ai": [
+              "Reinforcement learning locomotion",
+              "Autonomous navigation",
+              "Task planning"
+            ]
+          },
+          "features": [
+            {
+              "title": "Amazon Partnership",
+              "description": "Deployed at Amazon fulfillment centers for testing, demonstrating commercial viability in high-volume logistics operations."
+            },
+            {
+              "title": "Exceptional Battery Life",
+              "description": "Up to 16 hours of runtime enables full-shift operation without recharging, ideal for 24/7 warehouse operations."
+            }
+          ],
+          "applications": ["Warehouse automation", "Logistics", "Manufacturing", "Last-mile delivery"],
+          "videos": [
+            {
+              "id": "514IZJENQ3s",
+              "title": "Digit at Work",
+              "description": "Agility Robotics Digit humanoid robot working at Amazon warehouses"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "agibot",
+      "name": "AgiBot",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "China",
+      "founded": 2023,
+      "flagshipRobot": "G1",
+      "website": "https://agibot.com",
+      "valuationManual": 2100000000,
+      "description": "AgiBot is a Chinese humanoid robotics startup developing the G1 general-purpose robot. Backed by major investors, they focus on embodied AI for industrial automation.",
+      "ceo": "Zhou Wei",
+      "headquarters": "Shanghai, China",
+      "coordinates": { "lat": 31.2304, "lng": 121.4737 },
+      "twitter": null,
+      "linkedin": "https://linkedin.com/company/agibot",
+      "valuationHistory": [
+        {"date": "2023-06", "value": 200000000, "event": "Seed"},
+        {"date": "2024-01", "value": 600000000, "event": "Series A"},
+        {"date": "2024-08", "value": 1200000000, "event": "Series B"},
+        {"date": "2025-01", "value": 2100000000, "event": "Series C"}
+      ],
+      "robots": [
+        {
+          "id": "agibot-g1",
+          "name": "Genie G1",
+          "tagline": "A general-purpose humanoid robot designed for embodied AI research and industrial automation applications.",
+          "status": "prototype",
+          "image": "/robots/agibot.webp",
+          "specifications": {
+            "height": { "value": 165, "unit": "cm" },
+            "weight": { "value": 60, "unit": "kg" },
+            "payload": { "value": 15, "unit": "kg" },
+            "speed": { "value": 5, "unit": "km/h" },
+            "dof": 38,
+            "batteryLife": { "value": 4, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "RGB-D cameras",
+              "LiDAR",
+              "Force-torque sensors",
+              "IMU"
+            ],
+            "connectivity": [
+              "WiFi 6",
+              "5G",
+              "ROS 2 compatible"
+            ],
+            "ai": [
+              "Embodied AI foundation model",
+              "Large language model integration",
+              "Imitation learning"
+            ]
+          },
+          "features": [
+            {
+              "title": "Embodied AI Focus",
+              "description": "Built from the ground up for embodied AI research with advanced learning capabilities and sensor integration."
+            },
+            {
+              "title": "Rapid Development",
+              "description": "One of the fastest-growing humanoid robotics startups in China with strong investor backing."
+            }
+          ],
+          "applications": ["Manufacturing", "Research", "Logistics", "Industrial automation"]
+        }
+      ]
+    },
+    {
+      "id": "fourier-intelligence",
+      "name": "Fourier Intelligence",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "China",
+      "founded": 2015,
+      "flagshipRobot": "GR-2",
+      "website": "https://fourierintelligence.com",
+      "valuationManual": 1100000000,
+      "description": "Fourier Intelligence specializes in rehabilitation robotics and humanoid robots. The GR-2 is designed for healthcare, research, and commercial applications with a focus on affordability.",
+      "ceo": "Zen Koh",
+      "headquarters": "Shanghai, China",
+      "coordinates": { "lat": 31.2304, "lng": 121.4737 },
+      "twitter": "https://twitter.com/FourierIntl",
+      "linkedin": "https://linkedin.com/company/fourier-intelligence",
+      "valuationHistory": [
+        {"date": "2021-01", "value": 100000000, "event": "Series C"},
+        {"date": "2022-06", "value": 300000000, "event": "Series D"},
+        {"date": "2023-10", "value": 600000000, "event": "Series E"},
+        {"date": "2025-01", "value": 1100000000, "event": "Series F"}
+      ],
+      "robots": [
+        {
+          "id": "gr-2",
+          "name": "GR-2",
+          "tagline": "An affordable humanoid robot designed for healthcare, research, and commercial applications with a focus on accessibility and versatility.",
+          "status": "commercial",
+          "image": "/robots/fourier-intelligence.webp",
+          "specifications": {
+            "height": { "value": 175, "unit": "cm" },
+            "weight": { "value": 63, "unit": "kg" },
+            "payload": { "value": 5, "unit": "kg" },
+            "speed": { "value": 5, "unit": "km/h" },
+            "dof": 53,
+            "batteryLife": { "value": 2, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "RGB-D cameras",
+              "Force-torque sensors",
+              "IMU",
+              "Joint position sensors"
+            ],
+            "connectivity": [
+              "WiFi",
+              "Ethernet",
+              "ROS 2 compatible"
+            ],
+            "ai": [
+              "Embodied AI platform",
+              "Motion imitation learning",
+              "Natural language commands"
+            ]
+          },
+          "features": [
+            {
+              "title": "Healthcare Heritage",
+              "description": "Built on Fourier's expertise in rehabilitation robotics, featuring precise and safe motion control for human interaction."
+            },
+            {
+              "title": "Research Accessible",
+              "description": "Priced competitively for research institutions, with open APIs and ROS 2 compatibility for customization."
+            }
+          ],
+          "applications": ["Healthcare", "Research", "Education", "Rehabilitation"]
+        }
+      ]
+    },
+    {
+      "id": "kepler-robotics",
+      "name": "Kepler Robotics",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "China",
+      "founded": 2023,
+      "flagshipRobot": "Forerunner K2",
+      "website": "https://keplerbot.com",
+      "valuationManual": 500000000,
+      "description": "Kepler Robotics is developing the Forerunner series of humanoid robots for industrial applications. Their K2 robot features advanced manipulation and mobility for factory environments.",
+      "ceo": "Hu Debo",
+      "headquarters": "Shanghai, China",
+      "coordinates": { "lat": 31.2304, "lng": 121.4737 },
+      "twitter": null,
+      "linkedin": "https://linkedin.com/company/kepler-robotics",
+      "valuationHistory": [
+        {"date": "2023-09", "value": 50000000, "event": "Seed"},
+        {"date": "2024-04", "value": 200000000, "event": "Series A"},
+        {"date": "2025-01", "value": 500000000, "event": "Series B"}
+      ],
+      "robots": [
+        {
+          "id": "forerunner-k2",
+          "name": "Forerunner K2",
+          "tagline": "An industrial humanoid robot optimized for manufacturing environments with advanced manipulation and mobility capabilities.",
+          "status": "prototype",
+          "image": "/robots/kepler-robotics.webp",
+          "specifications": {
+            "height": { "value": 178, "unit": "cm" },
+            "weight": { "value": 85, "unit": "kg" },
+            "payload": { "value": 40, "unit": "kg" },
+            "speed": { "value": 5, "unit": "km/h" },
+            "dof": 40,
+            "batteryLife": { "value": 8, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Stereo cameras",
+              "3D LiDAR",
+              "Force sensors",
+              "Tactile sensing"
+            ],
+            "connectivity": [
+              "WiFi 6",
+              "5G",
+              "Industrial protocols"
+            ],
+            "ai": [
+              "End-to-end learning",
+              "Task planning",
+              "Visual servoing"
+            ]
+          },
+          "features": [
+            {
+              "title": "Heavy Payload",
+              "description": "Industry-leading 40kg payload capacity enables handling of heavy components in manufacturing environments."
+            },
+            {
+              "title": "Extended Operation",
+              "description": "8-hour battery life supports full-shift operation for continuous industrial deployment."
+            }
+          ],
+          "applications": ["Manufacturing", "Automotive assembly", "Heavy industry", "Logistics"]
+        }
+      ]
+    },
+    {
+      "id": "sanctuary-ai",
+      "name": "Sanctuary AI",
+      "ticker": null,
+      "exchange": null,
+      "type": "private",
+      "country": "Canada",
+      "founded": 2018,
+      "flagshipRobot": "Phoenix",
+      "website": "https://sanctuary.ai",
+      "valuationManual": 500000000,
+      "description": "Sanctuary AI is building human-like intelligence in general-purpose robots. Their Phoenix robot features the Carbon AI system for human-level dexterity and reasoning.",
+      "ceo": "Geordie Rose",
+      "headquarters": "Vancouver, Canada",
+      "coordinates": { "lat": 49.2827, "lng": -123.1207 },
+      "twitter": "https://twitter.com/SanctuaryAI",
+      "linkedin": "https://linkedin.com/company/sanctuary-cognitive-systems",
+      "valuationHistory": [
+        {"date": "2021-06", "value": 50000000, "event": "Series A"},
+        {"date": "2023-04", "value": 200000000, "event": "Series B"},
+        {"date": "2024-05", "value": 350000000, "event": "Series C"},
+        {"date": "2025-01", "value": 500000000, "event": "Current"}
+      ],
+      "robots": [
+        {
+          "id": "phoenix",
+          "name": "Phoenix",
+          "tagline": "A general-purpose humanoid robot powered by the Carbon AI system, designed to achieve human-level dexterity and cognitive abilities.",
+          "status": "commercial",
+          "image": "/robots/sanctuary-ai.webp",
+          "specifications": {
+            "height": { "value": 170, "unit": "cm" },
+            "weight": { "value": 70, "unit": "kg" },
+            "payload": { "value": 25, "unit": "kg" },
+            "speed": { "value": 5, "unit": "km/h" },
+            "dof": 20,
+            "batteryLife": { "value": 4, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "RGB-D cameras",
+              "High-resolution tactile sensors",
+              "Force-torque sensing",
+              "Proprioception"
+            ],
+            "connectivity": [
+              "WiFi",
+              "5G",
+              "Cloud AI connectivity"
+            ],
+            "ai": [
+              "Carbon AI system",
+              "Human-like reasoning",
+              "Transfer learning",
+              "Real-time adaptation"
+            ]
+          },
+          "features": [
+            {
+              "title": "Carbon AI",
+              "description": "Proprietary AI control system designed to replicate human-like intelligence and reasoning for general-purpose tasks."
+            },
+            {
+              "title": "Advanced Dexterity",
+              "description": "Features industry-leading hand dexterity with haptic feedback for precise manipulation comparable to human hands."
+            }
+          ],
+          "applications": ["Retail", "Manufacturing", "Logistics", "Healthcare"],
+          "videos": [
+            {
+              "id": "kxj5rEbHrEk",
+              "title": "Gen 7 Phoenix",
+              "description": "Sanctuary AI's seventh generation Phoenix humanoid robot"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "honda",
+      "name": "Honda",
+      "ticker": "HMC",
+      "exchange": "NYSE",
+      "type": "public",
+      "country": "Japan",
+      "founded": 1948,
+      "flagshipRobot": "ASIMO (legacy)",
+      "website": "https://honda.com",
+      "valuationManual": null,
+      "description": "Honda pioneered humanoid robotics with ASIMO, one of the first walking humanoid robots. While ASIMO is retired, Honda continues robotics R&D for mobility and assistance applications.",
+      "ceo": "Toshihiro Mibe",
+      "headquarters": "Tokyo, Japan",
+      "coordinates": { "lat": 35.6762, "lng": 139.6503 },
+      "twitter": "https://twitter.com/Honda",
+      "linkedin": "https://linkedin.com/company/honda",
+      "valuationHistory": [
+        {"date": "2022-01", "value": 48000000000},
+        {"date": "2022-06", "value": 42000000000},
+        {"date": "2023-01", "value": 45000000000},
+        {"date": "2023-06", "value": 50000000000},
+        {"date": "2024-01", "value": 48000000000},
+        {"date": "2024-06", "value": 46000000000},
+        {"date": "2025-01", "value": 52000000000}
+      ],
+      "robots": [
+        {
+          "id": "asimo",
+          "name": "ASIMO",
+          "tagline": "One of the world's first advanced humanoid robots, pioneering bipedal locomotion and human-robot interaction since 2000.",
+          "status": "retired",
+          "image": "/robots/honda.webp",
+          "specifications": {
+            "height": { "value": 130, "unit": "cm" },
+            "weight": { "value": 54, "unit": "kg" },
+            "payload": { "value": 0.5, "unit": "kg" },
+            "speed": { "value": 9, "unit": "km/h" },
+            "dof": 57,
+            "batteryLife": { "value": 1, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Stereo cameras",
+              "Floor surface sensors",
+              "Ultrasonic sensors",
+              "Force sensors"
+            ],
+            "connectivity": [
+              "WiFi",
+              "Voice recognition",
+              "Gesture recognition"
+            ],
+            "ai": [
+              "Object recognition",
+              "Path planning",
+              "Voice command processing"
+            ]
+          },
+          "features": [
+            {
+              "title": "Pioneering Legacy",
+              "description": "ASIMO was first unveiled in 2000 and retired in 2022, but its technology continues to influence Honda's robotics research."
+            },
+            {
+              "title": "Human Interaction",
+              "description": "One of the first robots capable of recognizing moving objects, gestures, and sounds, enabling natural human interaction."
+            }
+          ],
+          "applications": ["Research", "Public demonstrations", "Hospitality", "Elderly assistance"]
+        }
+      ]
+    },
+    {
+      "id": "toyota",
+      "name": "Toyota",
+      "ticker": "TM",
+      "exchange": "NYSE",
+      "type": "public",
+      "country": "Japan",
+      "founded": 1937,
+      "flagshipRobot": "T-HR3",
+      "website": "https://toyota.com",
+      "valuationManual": null,
+      "description": "Toyota develops humanoid robots through Toyota Research Institute. The T-HR3 is a telepresence humanoid robot designed for home assistance and disaster response applications.",
+      "ceo": "Koji Sato",
+      "headquarters": "Toyota City, Japan",
+      "coordinates": { "lat": 35.0821, "lng": 137.1560 },
+      "twitter": "https://twitter.com/Toyota",
+      "linkedin": "https://linkedin.com/company/toyota",
+      "valuationHistory": [
+        {"date": "2022-01", "value": 250000000000},
+        {"date": "2022-06", "value": 220000000000},
+        {"date": "2023-01", "value": 230000000000},
+        {"date": "2023-06", "value": 260000000000},
+        {"date": "2024-01", "value": 300000000000},
+        {"date": "2024-06", "value": 280000000000},
+        {"date": "2025-01", "value": 310000000000}
+      ],
+      "robots": [
+        {
+          "id": "t-hr3",
+          "name": "T-HR3",
+          "tagline": "A telepresence humanoid robot enabling remote physical presence through master-slave control for home assistance and disaster response.",
+          "status": "prototype",
+          "image": "/robots/toyota.webp",
+          "specifications": {
+            "height": { "value": 154, "unit": "cm" },
+            "weight": { "value": 75, "unit": "kg" },
+            "payload": { "value": 5, "unit": "kg" },
+            "speed": { "value": 3, "unit": "km/h" },
+            "dof": 32,
+            "batteryLife": { "value": 2, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Stereo cameras in head",
+              "Force/torque sensors",
+              "6-axis force sensors in feet",
+              "Torso-mounted camera"
+            ],
+            "connectivity": [
+              "High-bandwidth teleoperation link",
+              "WiFi",
+              "5G compatible"
+            ],
+            "ai": [
+              "Master-slave control system",
+              "Force feedback mapping",
+              "Balance control"
+            ]
+          },
+          "features": [
+            {
+              "title": "Telepresence Control",
+              "description": "Operators wear a Master Maneuvering System that maps their movements to T-HR3 in real-time with force feedback."
+            },
+            {
+              "title": "Toyota Research Institute",
+              "description": "Developed by TRI as part of Toyota's vision for mobility and assistance robotics for aging populations."
+            }
+          ],
+          "applications": ["Home assistance", "Disaster response", "Remote work", "Healthcare"]
+        }
+      ]
+    },
+    {
+      "id": "samsung",
+      "name": "Samsung Electronics",
+      "ticker": "005930.KS",
+      "exchange": "KRX",
+      "type": "public",
+      "country": "South Korea",
+      "founded": 1969,
+      "flagshipRobot": "Ballie",
+      "website": "https://samsung.com",
+      "valuationManual": null,
+      "description": "Samsung is developing AI-powered robots including Ballie, a rolling companion robot. They continue to invest in robotics R&D for smart home and industrial applications.",
+      "ceo": "Jong-Hee Han",
+      "headquarters": "Suwon, South Korea",
+      "coordinates": { "lat": 37.2636, "lng": 127.0286 },
+      "twitter": "https://twitter.com/Samsung",
+      "linkedin": "https://linkedin.com/company/samsung-electronics",
+      "valuationHistory": [
+        {"date": "2022-01", "value": 380000000000},
+        {"date": "2022-06", "value": 280000000000},
+        {"date": "2023-01", "value": 300000000000},
+        {"date": "2023-06", "value": 350000000000},
+        {"date": "2024-01", "value": 380000000000},
+        {"date": "2024-06", "value": 360000000000},
+        {"date": "2025-01", "value": 340000000000}
+      ],
+      "robots": [
+        {
+          "id": "ballie",
+          "name": "Ballie",
+          "tagline": "A spherical AI companion robot designed for smart home management, featuring a built-in projector and advanced AI assistant capabilities.",
+          "status": "prototype",
+          "image": "/robots/samsung.webp",
+          "specifications": {
+            "height": { "value": 12, "unit": "cm", "note": "diameter" },
+            "weight": { "value": 2, "unit": "kg" },
+            "payload": { "value": 0, "unit": "kg" },
+            "speed": { "value": 2, "unit": "km/h" },
+            "dof": 3,
+            "batteryLife": { "value": 8, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "Built-in camera",
+              "Microphone array",
+              "Spatial awareness sensors",
+              "Light sensors"
+            ],
+            "connectivity": [
+              "WiFi 6",
+              "Bluetooth 5.0",
+              "SmartThings integration",
+              "Matter compatible"
+            ],
+            "ai": [
+              "On-device AI processing",
+              "Voice recognition",
+              "Routine learning",
+              "Pet and human recognition"
+            ]
+          },
+          "features": [
+            {
+              "title": "Built-in Projector",
+              "description": "Features a full HD projector that can display content on any surface, turning walls into smart displays."
+            },
+            {
+              "title": "Smart Home Hub",
+              "description": "Integrates with Samsung SmartThings ecosystem to control all connected home devices through natural interaction."
+            }
+          ],
+          "applications": ["Smart home", "Elderly care", "Pet monitoring", "Home security"]
+        }
+      ]
+    },
+    {
+      "id": "lg-electronics",
+      "name": "LG Electronics",
+      "ticker": "066570.KS",
+      "exchange": "KRX",
+      "type": "public",
+      "country": "South Korea",
+      "founded": 1958,
+      "flagshipRobot": "CLOi",
+      "website": "https://lg.com",
+      "valuationManual": null,
+      "description": "LG Electronics develops the CLOi series of service robots for hospitality and retail environments. They continue to expand their robotics portfolio for commercial applications.",
+      "ceo": "William Cho",
+      "headquarters": "Seoul, South Korea",
+      "coordinates": { "lat": 37.5665, "lng": 126.9780 },
+      "twitter": "https://twitter.com/ABOROBOT",
+      "linkedin": "https://linkedin.com/company/lg-electronics",
+      "valuationHistory": [
+        {"date": "2022-01", "value": 12000000000},
+        {"date": "2022-06", "value": 10000000000},
+        {"date": "2023-01", "value": 11000000000},
+        {"date": "2023-06", "value": 13000000000},
+        {"date": "2024-01", "value": 14000000000},
+        {"date": "2024-06", "value": 13500000000},
+        {"date": "2025-01", "value": 15000000000}
+      ],
+      "robots": [
+        {
+          "id": "cloi",
+          "name": "CLOi",
+          "tagline": "A versatile service robot series designed for hospitality, retail, and commercial environments with autonomous navigation and customer service capabilities.",
+          "status": "commercial",
+          "image": "/robots/lg-electronics.webp",
+          "specifications": {
+            "height": { "value": 106, "unit": "cm" },
+            "weight": { "value": 60, "unit": "kg" },
+            "payload": { "value": 20, "unit": "kg" },
+            "speed": { "value": 4, "unit": "km/h" },
+            "dof": 6,
+            "batteryLife": { "value": 8, "unit": "hours" }
+          },
+          "capabilities": {
+            "sensing": [
+              "LiDAR navigation",
+              "3D cameras",
+              "Ultrasonic sensors",
+              "Touch display"
+            ],
+            "connectivity": [
+              "WiFi",
+              "LTE",
+              "LG ThinQ platform",
+              "Fleet management"
+            ],
+            "ai": [
+              "Natural language processing",
+              "Autonomous navigation",
+              "Object avoidance",
+              "Multi-robot coordination"
+            ]
+          },
+          "features": [
+            {
+              "title": "Commercial Deployment",
+              "description": "Deployed in hotels, airports, and retail stores worldwide for customer service, delivery, and information tasks."
+            },
+            {
+              "title": "Modular Design",
+              "description": "Available in multiple variants including GuideBot, ServeBot, and DeliveryBot for different commercial applications."
+            }
+          ],
+          "applications": ["Hospitality", "Retail", "Healthcare", "Commercial service"]
+        }
+      ]
+    }
+  ]
+}

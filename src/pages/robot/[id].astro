@@ -1,0 +1,970 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import companiesData from '../../data/companies.json';
+
+// Build list of all robots with their parent company info
+const allRobots = companiesData.companies.flatMap(company =>
+  (company.robots || []).map(robot => ({
+    ...robot,
+    company: {
+      id: company.id,
+      name: company.name,
+      type: company.type,
+      valuationManual: company.valuationManual,
+      ticker: company.ticker,
+      exchange: company.exchange,
+      website: company.website
+    }
+  }))
+);
+
+export function getStaticPaths() {
+  const robots = companiesData.companies.flatMap(company =>
+    (company.robots || []).map(robot => ({
+      params: { id: robot.id },
+      props: {
+        robot,
+        company: {
+          id: company.id,
+          name: company.name,
+          type: company.type,
+          valuationManual: company.valuationManual,
+          ticker: company.ticker,
+          exchange: company.exchange,
+          website: company.website
+        }
+      }
+    }))
+  );
+  return robots;
+}
+
+const { robot, company } = Astro.props;
+
+// Format currency
+function formatValuation(value: number | null): string {
+  if (!value) return 'N/A';
+  if (value >= 1e12) return `$${(value / 1e12).toFixed(2)}T`;
+  if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
+  if (value >= 1e6) return `$${(value / 1e6).toFixed(0)}M`;
+  return `$${value.toLocaleString()}`;
+}
+
+// Format spec value with unit
+function formatSpec(spec: any): string {
+  if (typeof spec === 'number') return spec.toString();
+  if (!spec || typeof spec !== 'object') return 'N/A';
+  const prefix = spec.prefix || '';
+  const value = spec.value;
+  const unit = spec.unit || '';
+  return `${prefix}${value}${unit ? ' ' + unit : ''}`;
+}
+
+// Get status badge class
+function getStatusClass(status: string): string {
+  switch(status) {
+    case 'commercial': return 'status-commercial';
+    case 'prototype': return 'status-prototype';
+    case 'discontinued': return 'status-discontinued';
+    default: return 'status-prototype';
+  }
+}
+
+// Companies with SVG logos instead of ICO
+const svgLogos = ['neura-robotics'];
+function getLogoPath(companyId: string): string {
+  return `/logos/${companyId}.${svgLogos.includes(companyId) ? 'svg' : 'ico'}`;
+}
+
+// SEO metadata
+const siteUrl = "https://xmaquina-marketcap.netlify.app";
+const pageUrl = `${siteUrl}/robot/${robot.id}`;
+const pageTitle = `${robot.name} by ${company.name} | Humanoid Robot Specifications`;
+const pageDescription = robot.tagline || `${robot.name} - Flagship humanoid robot by ${company.name}. View specifications, capabilities, and features.`;
+const pageKeywords = `${robot.name}, ${company.name}, humanoid robot, robot specifications, ${robot.applications?.join(', ') || 'robotics'}`;
+
+// Structured data
+const robotStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Product",
+      "@id": `${pageUrl}#robot`,
+      "name": robot.name,
+      "description": robot.tagline,
+      "brand": {
+        "@type": "Brand",
+        "name": company.name
+      },
+      "category": "Humanoid Robot",
+      "image": `${siteUrl}${robot.image}`,
+      "manufacturer": {
+        "@type": "Organization",
+        "name": company.name,
+        "url": company.website
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": siteUrl
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": company.name,
+          "item": `${siteUrl}/company/${company.id}`
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": robot.name,
+          "item": pageUrl
+        }
+      ]
+    }
+  ]
+};
+
+const specs = robot.specifications || {};
+const capabilities = robot.capabilities || {};
+const features = robot.features || [];
+const videos = robot.videos || [];
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageUrl}
+  ogType="article"
+  keywords={pageKeywords}
+  structuredData={robotStructuredData}
+>
+  <div class="robot-page">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="/">Home</a>
+      <span>/</span>
+      <a href={`/company/${company.id}`}>{company.name}</a>
+      <span>/</span>
+      <span class="current">{robot.name}</span>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="robot-hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <span class={`status-badge ${getStatusClass(robot.status)}`}>
+            {robot.status === 'commercial' ? 'Commercial' : robot.status === 'prototype' ? 'Prototype' : robot.status}
+          </span>
+          <h1>{robot.name}</h1>
+          <p class="robot-tagline">{robot.tagline}</p>
+          <div class="hero-brand">
+            <span>by</span>
+            <a href={`/company/${company.id}`} class="brand-link">
+              <img
+                src={getLogoPath(company.id)}
+                alt={`${company.name} logo`}
+                class="brand-logo"
+                onerror="this.style.display='none';"
+              />
+              <span class="brand-name">{company.name}</span>
+            </a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img
+            src={robot.image}
+            alt={`${robot.name} humanoid robot`}
+            class="robot-hero-img"
+          />
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <span>Scroll to explore</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M19 12l-7 7-7-7"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Specifications Section -->
+    <section class="specs-section">
+      <h2>Technical Specifications</h2>
+      <div class="specs-grid">
+        <div class="specs-column">
+          {specs.height && (
+            <div class="spec-item">
+              <span class="spec-label">Height</span>
+              <span class="spec-value">{formatSpec(specs.height)}</span>
+            </div>
+          )}
+          {specs.weight && (
+            <div class="spec-item">
+              <span class="spec-label">Weight</span>
+              <span class="spec-value">{formatSpec(specs.weight)}</span>
+            </div>
+          )}
+          {specs.payload && (
+            <div class="spec-item">
+              <span class="spec-label">Payload</span>
+              <span class="spec-value">{formatSpec(specs.payload)}</span>
+              {specs.payload.note && <span class="spec-note">{specs.payload.note}</span>}
+            </div>
+          )}
+          {specs.reach && (
+            <div class="spec-item">
+              <span class="spec-label">Reach</span>
+              <span class="spec-value">{formatSpec(specs.reach)}</span>
+            </div>
+          )}
+          {capabilities.sensing && capabilities.sensing.length > 0 && (
+            <div class="spec-item spec-list">
+              <span class="spec-label">Sensing</span>
+              <ul class="spec-values">
+                {capabilities.sensing.map((item: string) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        <div class="specs-center">
+          <img
+            src={robot.image}
+            alt={`${robot.name} specifications`}
+            class="specs-robot-img"
+          />
+        </div>
+
+        <div class="specs-column specs-column-right">
+          {specs.speed && (
+            <div class="spec-item">
+              <span class="spec-label">Max Speed</span>
+              <span class="spec-value">{formatSpec(specs.speed)}</span>
+            </div>
+          )}
+          {specs.maxTCPSpeed && (
+            <div class="spec-item">
+              <span class="spec-label">Max TCP Speed</span>
+              <span class="spec-value">{formatSpec(specs.maxTCPSpeed)}</span>
+            </div>
+          )}
+          {specs.dof && (
+            <div class="spec-item">
+              <span class="spec-label">Degrees of Freedom</span>
+              <span class="spec-value">{specs.dof} DOF</span>
+            </div>
+          )}
+          {specs.batteryLife && (
+            <div class="spec-item">
+              <span class="spec-label">Battery Life</span>
+              <span class="spec-value">{formatSpec(specs.batteryLife)}</span>
+            </div>
+          )}
+          {specs.repeatability && (
+            <div class="spec-item">
+              <span class="spec-label">Repeatability</span>
+              <span class="spec-value">{formatSpec(specs.repeatability)}</span>
+            </div>
+          )}
+          {capabilities.connectivity && capabilities.connectivity.length > 0 && (
+            <div class="spec-item spec-list">
+              <span class="spec-label">Connectivity</span>
+              <ul class="spec-values">
+                {capabilities.connectivity.map((item: string) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="overview-section">
+      <h2><span class="highlight">{robot.name}</span> Overview</h2>
+
+      <div class="overview-content">
+        <div class="overview-features">
+          {features.map((feature: any) => (
+            <div class="feature-block">
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+            </div>
+          ))}
+
+          {capabilities.ai && capabilities.ai.length > 0 && (
+            <div class="feature-block">
+              <h3>AI & Intelligence</h3>
+              <ul class="ai-list">
+                {capabilities.ai.map((item: string) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {robot.applications && robot.applications.length > 0 && (
+            <div class="feature-block">
+              <h3>Applications</h3>
+              <div class="applications-tags">
+                {robot.applications.map((app: string) => (
+                  <span class="app-tag">{app}</span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div class="overview-valuation">
+          <div class="valuation-card">
+            <h4>Current Valuation</h4>
+            <p class="valuation-value" data-company-id={company.id} data-manual={company.valuationManual}>
+              {company.type === 'public' ? 'Loading...' : formatValuation(company.valuationManual)}
+            </p>
+            <p class="valuation-type">
+              {company.type === 'public'
+                ? `${company.exchange}: ${company.ticker}`
+                : 'Private Company'
+              }
+            </p>
+            <a href={`/company/${company.id}`} class="valuation-link">
+              View {company.name} details
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Section -->
+    {videos.length > 0 && (
+      <section class="video-section">
+        <h2>Videos</h2>
+        <div class="video-grid">
+          {videos.map((video: any) => (
+            <div class="video-item">
+              <div class="video-wrapper">
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.id}`}
+                  title={video.title}
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="video-info">
+                <h3>{video.title}</h3>
+                {video.description && <p>{video.description}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Back Link -->
+    <div class="back-section">
+      <a href={`/company/${company.id}`} class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to {company.name}
+      </a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .robot-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+  }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumb a {
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-primary);
+  }
+
+  .breadcrumb .current {
+    color: var(--color-text);
+  }
+
+  /* Hero Section */
+  .robot-hero {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--spacing-2xl) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: center;
+  }
+
+  .hero-text {
+    max-width: 560px;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 0;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .status-commercial {
+    background: rgba(30, 214, 18, 0.15);
+    color: var(--color-primary);
+  }
+
+  .status-prototype {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+  }
+
+  .status-discontinued {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+  }
+
+  .hero-text h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .robot-tagline {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .hero-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--color-text-muted);
+  }
+
+  .brand-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .brand-link:hover {
+    color: var(--color-primary);
+  }
+
+  .brand-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 0;
+    object-fit: contain;
+  }
+
+  .hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .robot-hero-img {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+  }
+
+  .scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-2xl);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+    60% { transform: translateY(-4px); }
+  }
+
+  /* Specifications Section */
+  .specs-section {
+    padding: var(--spacing-3xl) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .specs-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    letter-spacing: -0.02em;
+  }
+
+  .specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+  }
+
+  .specs-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .specs-column-right {
+    text-align: right;
+  }
+
+  .specs-column-right .spec-values {
+    text-align: right;
+  }
+
+  .specs-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .specs-robot-img {
+    max-width: 100%;
+    max-height: 600px;
+    object-fit: contain;
+  }
+
+  .spec-item {
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .spec-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .spec-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+  }
+
+  .spec-note {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs);
+  }
+
+  .spec-list .spec-values {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .spec-list .spec-values li {
+    position: relative;
+    padding-left: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+
+  .spec-list .spec-values li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 6px;
+    height: 6px;
+    background: var(--color-primary);
+    border-radius: 50%;
+  }
+
+  .specs-column-right .spec-values li {
+    padding-left: 0;
+    padding-right: var(--spacing-md);
+  }
+
+  .specs-column-right .spec-values li::before {
+    left: auto;
+    right: 0;
+  }
+
+  /* Overview Section */
+  .overview-section {
+    padding: var(--spacing-3xl) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .overview-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-2xl);
+    letter-spacing: -0.02em;
+  }
+
+  .overview-section h2 .highlight {
+    color: var(--color-primary);
+  }
+
+  .overview-content {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--spacing-2xl);
+  }
+
+  .overview-features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+
+  .feature-block {
+    padding: var(--spacing-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+  }
+
+  .feature-block h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+  }
+
+  .feature-block p {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .ai-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ai-list li {
+    position: relative;
+    padding-left: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .ai-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 6px;
+    height: 6px;
+    background: var(--color-primary);
+    border-radius: 50%;
+  }
+
+  .applications-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .app-tag {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+
+  .valuation-card {
+    position: sticky;
+    top: 100px;
+    padding: var(--spacing-xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+  }
+
+  .valuation-card h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .valuation-card .valuation-value {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--color-primary);
+    margin: 0 0 var(--spacing-xs);
+  }
+
+  .valuation-type {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--spacing-lg);
+  }
+
+  .valuation-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .valuation-link:hover {
+    color: var(--color-primary);
+  }
+
+  /* Video Section */
+  .video-section {
+    padding: var(--spacing-3xl) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .video-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-2xl);
+    letter-spacing: -0.02em;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--spacing-xl);
+  }
+
+  .video-item {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+  }
+
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-info {
+    padding: var(--spacing-md);
+  }
+
+  .video-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 var(--spacing-xs);
+    color: var(--color-text);
+  }
+
+  .video-info p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Back Section */
+  .back-section {
+    padding: var(--spacing-xl) 0 var(--spacing-3xl);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  .back-link:hover {
+    color: var(--color-primary);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .specs-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+    }
+
+    .specs-center {
+      order: -1;
+    }
+
+    .specs-column-right {
+      text-align: left;
+    }
+
+    .specs-column-right .spec-values {
+      text-align: left;
+    }
+
+    .specs-column-right .spec-values li {
+      padding-left: var(--spacing-md);
+      padding-right: 0;
+    }
+
+    .specs-column-right .spec-values li::before {
+      left: 0;
+      right: auto;
+    }
+
+    .overview-content {
+      grid-template-columns: 1fr;
+    }
+
+    .valuation-card {
+      position: static;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .robot-page {
+      padding: 0 var(--spacing-md);
+    }
+
+    .robot-hero {
+      min-height: auto;
+      padding: var(--spacing-xl) 0;
+    }
+
+    .hero-content {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+    }
+
+    .hero-text h1 {
+      font-size: 2.5rem;
+    }
+
+    .robot-tagline {
+      font-size: 1rem;
+    }
+
+    .hero-image {
+      order: -1;
+    }
+
+    .robot-hero-img {
+      max-height: 300px;
+    }
+
+    .specs-section h2,
+    .overview-section h2,
+    .video-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .specs-robot-img {
+      max-height: 300px;
+    }
+
+    .video-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Fetch real stock prices for public companies
+  async function updateValuation() {
+    const valuationEl = document.querySelector('.valuation-value');
+    if (!valuationEl) return;
+
+    const companyId = valuationEl.getAttribute('data-company-id');
+    const manualVal = valuationEl.getAttribute('data-manual');
+
+    if (manualVal && manualVal !== 'null') {
+      return; // Already has manual valuation
+    }
+
+    try {
+      const response = await fetch('/api/stock-prices');
+      const result = await response.json();
+
+      if (result.success && result.data && result.data[companyId]) {
+        const marketCap = result.data[companyId].marketCap;
+        valuationEl.textContent = formatValuation(marketCap);
+      }
+    } catch (error) {
+      console.error('Failed to fetch valuation:', error);
+    }
+  }
+
+  function formatValuation(value: number): string {
+    if (value >= 1e12) return `$${(value / 1e12).toFixed(2)}T`;
+    if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
+    if (value >= 1e6) return `$${(value / 1e6).toFixed(0)}M`;
+    return `$${value.toLocaleString()}`;
+  }
+
+  document.addEventListener('DOMContentLoaded', updateValuation);
+</script>

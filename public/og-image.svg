@@ -1,0 +1,45 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#010101"/>
+
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- XMAQUINA Logo X -->
+  <g transform="translate(100, 220)">
+    <path d="M89.4252 1.00479L53.9972 31.3226L91.1576 63.1128V63.7192H73.9204L45.248 38.9454L17.0092 63.7192H0.0312500V63.1128L36.326 31.9290L0.117872 1.00479V0.398438H17.3558L45.0748 24.3062L72.3608 0.398438H89.4252V1.00479Z" fill="#1ED612"/>
+  </g>
+
+  <!-- Title -->
+  <text x="100" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="#FFFFFF">Humanoid Robotics</text>
+  <text x="100" y="430" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="#FFFFFF">Market Cap Tracker</text>
+
+  <!-- Subtitle -->
+  <text x="100" y="500" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="#71717a">Track valuations of Tesla, Figure AI, Boston Dynamics, and 20+ companies</text>
+
+  <!-- Stats -->
+  <g transform="translate(100, 550)">
+    <text font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#1ED612">20+ Companies</text>
+    <text x="200" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#71717a">|</text>
+    <text x="230" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#1ED612">Real-time Data</text>
+    <text x="430" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#71717a">|</text>
+    <text x="460" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#1ED612">7 Countries</text>
+  </g>
+
+  <!-- Robot icon -->
+  <g transform="translate(900, 180)">
+    <rect x="40" y="0" width="120" height="100" rx="20" fill="#1ED612" opacity="0.2"/>
+    <circle cx="100" cy="140" r="60" fill="#1ED612" opacity="0.1"/>
+    <rect x="60" y="200" width="80" height="120" rx="10" fill="#1ED612" opacity="0.15"/>
+    <circle cx="80" cy="40" r="15" fill="#1ED612"/>
+    <circle cx="120" cy="40" r="15" fill="#1ED612"/>
+    <rect x="70" y="65" width="60" height="8" rx="4" fill="#1ED612" opacity="0.5"/>
+  </g>
+
+  <!-- URL -->
+  <text x="100" y="600" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#52525b">xmaquina-marketcap.netlify.app</text>
+</svg>

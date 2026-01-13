@@ -1,0 +1,16 @@
+{
+  "name": "xmaquina-marketcap",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
+    "astro": "^5.16.7",
+    "yahoo-finance2": "^3.11.2"
+  }
+}
