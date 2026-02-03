@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import companiesData from '../data/companies.json';
 
-const siteUrl = 'https://xmaquina-marketcap.netlify.app';
+const siteUrl = 'https://robotico-portal.netlify.app';
 
 export const GET: APIRoute = async () => {
   const today = new Date().toISOString().split('T')[0];

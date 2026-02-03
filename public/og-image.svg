@@ -9,14 +9,15 @@
   </defs>
   <rect width="1200" height="630" fill="url(#grid)"/>
 
-  <!-- XMAQUINA Logo X -->
-  <g transform="translate(100, 220)">
-    <path d="M89.4252 1.00479L53.9972 31.3226L91.1576 63.1128V63.7192H73.9204L45.248 38.9454L17.0092 63.7192H0.0312500V63.1128L36.326 31.9290L0.117872 1.00479V0.398438H17.3558L45.0748 24.3062L72.3608 0.398438H89.4252V1.00479Z" fill="#1ED612"/>
+  <!-- Robotico Logo Icon -->
+  <g transform="translate(100, 200) scale(2.5)">
+    <path d="M18.7 0H11.9055V6.68028L17.8549 12.6297L11.9055 18.5792V25.2594L30.3705 33.6755L34.47 22.7472C38.5923 11.739 30.4504 0 18.7 0Z" fill="#1ED612"/>
+    <path d="M5.95102 6.67807L0 12.6291L5.95102 18.5801L11.902 12.6291L5.95102 6.67807Z" fill="#1ED612"/>
   </g>
 
   <!-- Title -->
-  <text x="100" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="#FFFFFF">Humanoid Robotics</text>
-  <text x="100" y="430" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="#FFFFFF">Market Cap Tracker</text>
+  <text x="100" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="#FFFFFF">Chronicling the Age</text>
+  <text x="100" y="430" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="#1ED612">of Embodied AI</text>
 
   <!-- Subtitle -->
   <text x="100" y="500" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="#71717a">Track valuations of Tesla, Figure AI, Boston Dynamics, and 20+ companies</text>
@@ -30,7 +31,7 @@
     <text x="460" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#1ED612">7 Countries</text>
   </g>
 
-  <!-- Robot icon -->
+  <!-- Robot silhouette -->
   <g transform="translate(900, 180)">
     <rect x="40" y="0" width="120" height="100" rx="20" fill="#1ED612" opacity="0.2"/>
     <circle cx="100" cy="140" r="60" fill="#1ED612" opacity="0.1"/>
@@ -41,5 +42,5 @@
   </g>
 
   <!-- URL -->
-  <text x="100" y="600" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#52525b">xmaquina-marketcap.netlify.app</text>
+  <text x="100" y="600" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#52525b">robotico-portal.netlify.app</text>
 </svg>

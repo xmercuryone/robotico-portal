@@ -23,9 +23,9 @@ function formatDate(date: Date): string {
 }
 
 // SEO metadata
-const siteUrl = "https://xmaquina-marketcap.netlify.app";
+const siteUrl = "https://robotico-portal.netlify.app";
 const pageUrl = `${siteUrl}/news/${article.slug}`;
-const pageTitle = `${article.data.title} | XMAQUINA News`;
+const pageTitle = `${article.data.title} | Robotico News`;
 const pageDescription = article.data.description;
 const pageKeywords = `humanoid robots, robotics news, ${article.data.companies?.join(', ') || 'robotics industry'}`;
 const ogImage = article.data.image ? `${siteUrl}${article.data.image}` : `${siteUrl}/og-image.svg`;
@@ -45,11 +45,11 @@ const structuredData = {
   },
   "publisher": {
     "@type": "Organization",
-    "name": "XMAQUINA",
-    "url": "https://xmaquina.io",
+    "name": "Robotico",
+    "url": "https://robotico.com",
     "logo": {
       "@type": "ImageObject",
-      "url": `${siteUrl}/xmaquina-logo.svg`
+      "url": `${siteUrl}/robotico-logo.svg`
     }
   },
   "mainEntityOfPage": {

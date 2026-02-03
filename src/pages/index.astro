@@ -49,8 +49,8 @@ function getLogoPath(companyId: string): string {
 }
 
 // SEO metadata
-const siteUrl = "https://xmaquina-marketcap.netlify.app";
-const pageTitle = "XMAQUINA Market Cap | Humanoid Robotics Companies Directory & Valuations";
+const siteUrl = "https://robotico-portal.netlify.app";
+const pageTitle = "Robotico | Humanoid Robotics Companies Directory & Valuations";
 const pageDescription = `Track ${companies.length} leading humanoid robotics companies worldwide. Real-time market cap data for Tesla Optimus, Figure AI, Boston Dynamics, Unitree, and more. Compare valuations, funding rounds, and company profiles.`;
 const pageKeywords = "humanoid robots market cap, robotics companies valuation, Tesla Optimus, Figure AI, Boston Dynamics Atlas, Unitree H1, humanoid robotics industry, robot companies stock, AI robots, autonomous robots";
 
@@ -61,13 +61,13 @@ const homepageStructuredData = {
     {
       "@type": "WebSite",
       "@id": `${siteUrl}#website`,
-      "name": "XMAQUINA Market Cap",
+      "name": "Robotico",
       "url": siteUrl,
       "description": pageDescription,
       "publisher": {
         "@type": "Organization",
-        "name": "XMAQUINA",
-        "url": "https://xmaquina.io"
+        "name": "Robotico",
+        "url": "https://robotico.com"
       },
       "potentialAction": {
         "@type": "SearchAction",
@@ -112,7 +112,7 @@ const homepageStructuredData = {
           "name": "How many humanoid robotics companies are tracked?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": `XMAQUINA Market Cap tracks ${companies.length} humanoid robotics companies, including ${publicCount} publicly traded companies and ${privateCount} private companies from ${countries.length} countries.`
+            "text": `Robotico tracks ${companies.length} humanoid robotics companies, including ${publicCount} publicly traded companies and ${privateCount} private companies from ${countries.length} countries.`
           }
         },
         {

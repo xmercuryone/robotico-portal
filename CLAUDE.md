@@ -4,7 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-XMAQUINA Market Cap is an Astro-based static site that tracks humanoid robotics companies and their market valuations. It features company profiles, robot details, industry analytics, and an interactive globe visualization. The site deploys to Netlify.
+Robotico Portal is an Astro-based static site that tracks humanoid robotics companies and their market valuations. It features company profiles, robot details, industry analytics, and an interactive globe visualization. The site deploys to Netlify.
+
+## Brand Guidelines
+
+The site follows the Robotico Brand Guidelines:
+- **Primary Color**: Malachite Green `#1ED612`
+- **Complementary Color**: Blue `#0000FF`
+- **Grayscale**: White `#FFFFFF`, Athens Gray `#E8ECEF`, Geyser `#CED8E3`, Regent Gray `#8F98A4`, Woodsmoke `#0E0F12`, Black `#010101`
+- **Typography**: TWK Everett (fallback: Space Grotesk)
+- **Logo**: Robotico robot head icon with wordmark
 
 ## Commands
 
@@ -41,7 +50,10 @@ src/
 public/
 ├── logos/          # Company favicon/logos (.ico)
 ├── robots/         # Robot images (.webp)
-└── *.svg           # Site logos and OG images
+├── robotico-logo.svg       # White logo (for dark backgrounds)
+├── robotico-logo-dark.svg  # Black logo (for light backgrounds)
+├── favicon.svg     # Site favicon (Robotico icon)
+└── og-image.svg    # Open Graph image
 
 netlify/
 └── functions/      # Netlify serverless functions (stock-prices.js)
@@ -70,23 +82,29 @@ The `netlify.toml` configures:
 
 ## Deployment
 
-- **Live URL**: https://xmaquina-marketcap.netlify.app
-- **GitHub**: github.com/xmercuryone/xmaquina-hip-v0 (private repo)
+- **Live URL**: https://robotico-portal.netlify.app
+- **GitHub**: github.com/xmercuryone/robotico-portal (private repo)
 - **SSH**: Uses `github-xmercuryone` host alias (configured in ~/.ssh/config)
 - **Deploy**: `netlify deploy --prod --dir=dist`
 
 ## Logo Handling
 
+### Site Logos
+- `robotico-logo.svg` - White version for dark backgrounds
+- `robotico-logo-dark.svg` - Black version for light backgrounds
+- CSS classes `.logo-light` and `.logo-dark` handle theme switching
+
+### Company Logos (need special handling)
 Some company logos require special handling:
 
-### Dark Logos (need white background in dark mode)
+#### Dark Logos (need white background in dark mode)
 `darkLogos` array in page components: apptronik, hyundai, honda, toyota, xpeng, agility-robotics, 1x-technologies, neura-robotics
 
-### SVG Logos (instead of .ico)
+#### SVG Logos (instead of .ico)
 `svgLogos` array: neura-robotics
 - Use `getLogoPath(companyId)` helper function to get correct path
 
-### CSS Classes
+#### CSS Classes
 - `.dark-logo` - Gets white background in dark mode
 - `.light-logo` - Gets inverted in light mode (currently unused)
 
