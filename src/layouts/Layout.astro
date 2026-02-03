@@ -13,7 +13,7 @@ const {
   title,
   description = "Track the market cap and valuation of leading humanoid robotics companies worldwide. Real-time stock data, funding history, and comprehensive profiles for Tesla, Figure AI, Boston Dynamics, and more.",
   canonicalUrl = Astro.url.href,
-  ogImage = "https://robotico-portal.netlify.app/og-image.svg",
+  ogImage = "https://robotico-portal.netlify.app/og-image.png",
   ogType = "website",
   structuredData,
   keywords = "humanoid robots, robotics companies, market cap, valuation, Tesla Optimus, Figure AI, Boston Dynamics, robotics industry, AI robots, embodied AI"
@@ -76,6 +76,9 @@ const finalStructuredData = structuredData || defaultStructuredData;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="en_US" />
 
@@ -85,6 +88,7 @@ const finalStructuredData = structuredData || defaultStructuredData;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={title} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
