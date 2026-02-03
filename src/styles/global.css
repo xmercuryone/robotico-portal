@@ -1050,13 +1050,14 @@ img.company-logo {
 
 /* Responsive */
 @media (max-width: 992px) {
-  .table-header {
-    flex-direction: column;
-    align-items: stretch;
+  /* Hide filters on tablet, keep only search */
+  .type-toggle,
+  .filter-dropdown {
+    display: none;
   }
 
   .table-controls {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 }
 
@@ -1138,22 +1139,27 @@ img.company-logo {
 
   .table-header {
     padding: var(--spacing-md);
+    flex-direction: row;
+    align-items: center;
   }
 
   .table-title {
     font-size: 1rem;
   }
 
-  /* Table controls mobile */
+  /* Table controls mobile - only show search */
   .table-controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: var(--spacing-sm);
   }
 
+  .type-toggle,
+  .filter-dropdown {
+    display: none;
+  }
+
   .search-box {
-    grid-column: 1 / -1;
-    order: -1;
+    width: auto;
   }
 
   .search-box input {
@@ -1161,18 +1167,6 @@ img.company-logo {
     flex: 1;
   }
 
-  .type-toggle {
-    grid-column: 1 / -1;
-  }
-
-  .filter-dropdown {
-    grid-column: 1 / -1;
-  }
-
-  .filter-btn {
-    width: 100%;
-    justify-content: space-between;
-  }
 
   /* Table mobile */
   .table-wrapper {
@@ -1270,11 +1264,6 @@ img.company-logo {
     padding: var(--spacing-md);
   }
 
-  .toggle-btn {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: 0.75rem;
-  }
-
   .company-cell {
     gap: var(--spacing-sm);
   }
@@ -1327,11 +1316,6 @@ img.company-logo {
   .search-input {
     font-size: 0.6875rem;
     padding: var(--spacing-xs) var(--spacing-sm);
-  }
-
-  .toggle-btn {
-    padding: var(--spacing-xs);
-    font-size: 0.625rem;
   }
 }
 
