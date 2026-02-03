@@ -496,14 +496,14 @@ const companyStructuredData = {
   }
 
   /* Dark logos need light background in dark mode */
-  [data-theme="dark"] .company-logo-large.dark-logo {
+  :global([data-theme="dark"]) .company-logo-large.dark-logo {
     background: #ffffff;
     padding: 8px;
   }
 
   /* Light/white logos need to be inverted in light mode */
-  [data-theme="light"] .company-logo-large.light-logo,
-  :root:not([data-theme="dark"]) .company-logo-large.light-logo {
+  :global([data-theme="light"]) .company-logo-large.light-logo,
+  :global(:root:not([data-theme="dark"])) .company-logo-large.light-logo {
     filter: invert(1);
   }
 
@@ -1182,7 +1182,7 @@ const companyStructuredData = {
             ticks: {
               color: textColor,
               font: {
-                family: "'Space Grotesk', sans-serif",
+                family: "'TWK Everett', 'Space Grotesk', sans-serif",
                 size: 11
               }
             }
@@ -1194,7 +1194,7 @@ const companyStructuredData = {
             ticks: {
               color: textColor,
               font: {
-                family: "'Space Grotesk', sans-serif",
+                family: "'TWK Everett', 'Space Grotesk', sans-serif",
                 size: 11
               },
               callback: function(value) {
