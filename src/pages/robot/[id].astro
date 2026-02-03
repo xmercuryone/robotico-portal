@@ -145,13 +145,32 @@ const videos = robot.videos || [];
   structuredData={robotStructuredData}
 >
   <div class="robot-page">
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-      <a href="/">Home</a>
-      <span>/</span>
-      <a href={`/company/${company.id}`}>{company.name}</a>
-      <span>/</span>
-      <span class="current">{robot.name}</span>
+    <!-- Sticky Sub-header -->
+    <div class="sub-header">
+      <!-- Breadcrumb view (shown initially) -->
+      <div class="sub-header-breadcrumb">
+        <a href="/" class="breadcrumb-link">Companies</a>
+        <span class="breadcrumb-separator">/</span>
+        <a href={`/company/${company.id}`} class="breadcrumb-link">{company.name}</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">{robot.name}</span>
+      </div>
+      <!-- Robot info view (shown when hero scrolls out) -->
+      <div class="sub-header-robot">
+        <div class="sub-header-left">
+          <img
+            src={robot.image}
+            alt={`${robot.name}`}
+            class="sub-header-robot-img"
+          />
+          <span class="sub-header-title">{robot.name}</span>
+        </div>
+        <div class="sub-header-right">
+          <span class={`sub-header-status ${getStatusClass(robot.status)}`}>
+            {robot.status === 'commercial' ? 'Commercial' : robot.status === 'prototype' ? 'Prototype' : robot.status}
+          </span>
+        </div>
+      </div>
     </div>
 
     <!-- Hero Section -->
@@ -391,26 +410,152 @@ const videos = robot.videos || [];
     padding: 0 var(--spacing-lg);
   }
 
-  /* Breadcrumb */
-  .breadcrumb {
+  /* Sticky Sub-header - Same pattern as homepage table-header */
+  .sub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px; /* Fixed height: 14px padding + 32px image + 14px padding */
+    padding: 0 var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: var(--header-height);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 50;
+    margin: 0 calc(-1 * var(--spacing-lg));
+  }
+
+  :global([data-theme="dark"]) .sub-header {
+    background: rgba(1, 1, 1, 0.95);
+  }
+
+  /* Breadcrumb view */
+  .sub-header-breadcrumb {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    padding: var(--spacing-md) 0;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
+    height: 100%;
   }
 
-  .breadcrumb a {
-    color: var(--color-text-muted);
+  .breadcrumb-link {
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: color var(--transition-fast);
   }
 
-  .breadcrumb a:hover {
+  .breadcrumb-link:hover {
     color: var(--color-primary);
   }
 
-  .breadcrumb .current {
+  .breadcrumb-separator {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .breadcrumb-current {
     color: var(--color-text);
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  /* Robot info view - hidden by default */
+  .sub-header-robot {
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* When scrolled, show robot info, hide breadcrumb */
+  .sub-header.scrolled .sub-header-breadcrumb {
+    display: none;
+  }
+
+  .sub-header.scrolled .sub-header-robot {
+    display: flex;
+  }
+
+  .sub-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+
+  .sub-header-robot-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-secondary);
+  }
+
+  .sub-header-title {
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--color-text);
+  }
+
+  .sub-header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+
+  .sub-header-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .sub-header-status.status-commercial {
+    background: rgba(30, 214, 18, 0.15);
+    color: var(--color-primary);
+  }
+
+  .sub-header-status.status-prototype {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+  }
+
+  .sub-header-status.status-discontinued {
+    background: rgba(143, 152, 164, 0.15);
+    color: var(--color-negative);
+  }
+
+  @media (max-width: 768px) {
+    .sub-header {
+      margin: 0 calc(-1 * var(--spacing-md));
+      height: 52px; /* Fixed height: 12px padding + 28px image + 12px padding */
+      padding: 0 var(--spacing-md);
+    }
+
+    .sub-header-robot-img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .sub-header-title {
+      font-size: 1rem;
+    }
+
+    .sub-header-status {
+      padding: 2px 8px;
+      font-size: 0.6875rem;
+    }
+
+    .sub-header-breadcrumb {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   /* Hero Section */
@@ -966,5 +1111,32 @@ const videos = robot.videos || [];
     return `$${value.toLocaleString()}`;
   }
 
-  document.addEventListener('DOMContentLoaded', updateValuation);
+  // Sub-header scroll detection
+  function setupSubHeaderScroll() {
+    const subHeader = document.querySelector('.sub-header');
+    const heroSection = document.querySelector('.robot-hero');
+    if (!subHeader || !heroSection) return;
+
+    // Get header height for offset calculation
+    const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 62;
+    const subHeaderHeight = subHeader.offsetHeight;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // When hero section goes out of view, show robot info
+        subHeader.classList.toggle('scrolled', !entry.isIntersecting);
+      },
+      {
+        rootMargin: `-${headerHeight + subHeaderHeight}px 0px 0px 0px`,
+        threshold: 0
+      }
+    );
+
+    observer.observe(heroSection);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    updateValuation();
+    setupSubHeaderScroll();
+  });
 </script>

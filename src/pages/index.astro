@@ -578,13 +578,16 @@ const homepageStructuredData = {
     const tableHeader = document.querySelector('.table-header');
     if (!tableHeader) return;
 
+    // Read header height from CSS variable
+    const headerHeight = getComputedStyle(document.documentElement).getPropertyValue('--header-height').trim() || '62px';
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         // When the sentinel goes out of view (header is sticky), add class
         tableHeader.classList.toggle('is-sticky', !entry.isIntersecting);
       },
       {
-        rootMargin: '-58px 0px 0px 0px', // Account for header height
+        rootMargin: `-${parseInt(headerHeight)}px 0px 0px 0px`,
         threshold: 0
       }
     );

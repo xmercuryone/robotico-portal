@@ -176,13 +176,32 @@ const companyStructuredData = {
   structuredData={companyStructuredData}
 >
   <div class="company-page">
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-      <a href="/">Home</a>
-      <span>/</span>
-      <a href="/">Companies</a>
-      <span>/</span>
-      <span class="current">{company.name}</span>
+    <!-- Sticky Sub-header -->
+    <div class="sub-header">
+      <!-- Breadcrumb view (shown initially) -->
+      <div class="sub-header-breadcrumb">
+        <a href="/" class="breadcrumb-link">Companies</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">{company.name}</span>
+      </div>
+      <!-- Company info view (shown when hero scrolls out) -->
+      <div class="sub-header-company">
+        <div class="sub-header-left">
+          <img
+            src={getLogoPath(company.id)}
+            alt={`${company.name} logo`}
+            class={`sub-header-logo${darkLogos.includes(company.id) ? ' dark-logo' : ''}`}
+            onerror="this.style.display='none';"
+          />
+          <span class="sub-header-title">{company.name}</span>
+        </div>
+        <div class="sub-header-right">
+          <span class="sub-header-valuation">
+            {company.type === 'public' ? '...' : formatValuation(company.valuationManual)}
+          </span>
+          <span class={`sub-header-badge ${company.type}`}>{company.type === 'public' ? 'Public' : 'Private'}</span>
+        </div>
+      </div>
     </div>
 
     <!-- Hero Section -->
@@ -447,26 +466,168 @@ const companyStructuredData = {
     padding: 0 var(--spacing-lg);
   }
 
-  /* Breadcrumb */
-  .breadcrumb {
+  /* Sticky Sub-header - Same pattern as homepage table-header */
+  .sub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px; /* Fixed height: 14px padding + 32px logo + 14px padding */
+    padding: 0 var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: var(--header-height);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 50;
+    margin: 0 calc(-1 * var(--spacing-lg));
+  }
+
+  :global([data-theme="dark"]) .sub-header {
+    background: rgba(1, 1, 1, 0.95);
+  }
+
+  /* Breadcrumb view */
+  .sub-header-breadcrumb {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    padding: var(--spacing-md) 0;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
+    height: 100%;
   }
 
-  .breadcrumb a {
-    color: var(--color-text-muted);
+  .breadcrumb-link {
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: color var(--transition-fast);
   }
 
-  .breadcrumb a:hover {
+  .breadcrumb-link:hover {
     color: var(--color-primary);
   }
 
-  .breadcrumb .current {
+  .breadcrumb-separator {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .breadcrumb-current {
     color: var(--color-text);
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  /* Company info view - hidden by default */
+  .sub-header-company {
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* When scrolled, show company info, hide breadcrumb */
+  .sub-header.scrolled .sub-header-breadcrumb {
+    display: none;
+  }
+
+  .sub-header.scrolled .sub-header-company {
+    display: flex;
+  }
+
+  .sub-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+
+  .sub-header-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+  }
+
+  :global([data-theme="dark"]) .sub-header-logo.dark-logo {
+    background: #ffffff;
+    padding: 4px;
+  }
+
+  .sub-header-title {
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--color-text);
+  }
+
+  .sub-header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+
+  .sub-header-valuation {
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--color-text);
+    font-size: 0.9375rem;
+  }
+
+  .sub-header-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    border: 1px solid;
+  }
+
+  .sub-header-badge.public {
+    background: transparent;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .sub-header-badge.private {
+    background: var(--color-bg-secondary);
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .sub-header {
+      margin: 0 calc(-1 * var(--spacing-md));
+      height: 52px; /* Fixed height: 12px padding + 28px logo + 12px padding */
+      padding: 0 var(--spacing-md);
+    }
+
+    .sub-header-logo {
+      width: 28px;
+      height: 28px;
+    }
+
+    .sub-header-title {
+      font-size: 1rem;
+    }
+
+    .sub-header-valuation {
+      font-size: 0.8125rem;
+    }
+
+    .sub-header-badge {
+      padding: 2px 8px;
+      font-size: 0.6875rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sub-header-valuation,
+    .sub-header-badge {
+      display: none;
+    }
   }
 
   /* Hero Section */
@@ -1217,8 +1378,33 @@ const companyStructuredData = {
   });
   observer.observe(document.documentElement, { attributes: true });
 
+  // Sub-header scroll detection
+  function setupSubHeaderScroll() {
+    const subHeader = document.querySelector('.sub-header');
+    const heroSection = document.querySelector('.company-hero');
+    if (!subHeader || !heroSection) return;
+
+    // Get header height for offset calculation
+    const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 62;
+    const subHeaderHeight = subHeader.offsetHeight;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // When hero section goes out of view, show company info
+        subHeader.classList.toggle('scrolled', !entry.isIntersecting);
+      },
+      {
+        rootMargin: `-${headerHeight + subHeaderHeight}px 0px 0px 0px`,
+        threshold: 0
+      }
+    );
+
+    observer.observe(heroSection);
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     updateValuation();
     initChart();
+    setupSubHeaderScroll();
   });
 </script>

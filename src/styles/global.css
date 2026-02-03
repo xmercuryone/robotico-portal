@@ -61,6 +61,9 @@
   --transition-fast: 150ms ease;
   --transition-base: 200ms ease;
   --transition-slow: 300ms ease;
+
+  /* Layout */
+  --header-height: 62px; /* 16px padding + 29px logo + 16px padding + 1px border */
 }
 
 /* Dark theme - Robotico primary mode */
@@ -353,7 +356,7 @@ a:hover {
   flex-wrap: wrap;
   gap: var(--spacing-md);
   position: sticky;
-  top: 57px; /* Height of header */
+  top: var(--header-height);
   background: var(--color-surface);
   z-index: 50;
   transition: background var(--transition-base), box-shadow var(--transition-base);
