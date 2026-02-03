@@ -18,9 +18,9 @@ The site follows the Robotico Brand Guidelines:
 ## Commands
 
 ```bash
-npm run dev       # Start dev server at localhost:4321
-npm run build     # Build production site to ./dist/
-npm run preview   # Preview production build locally
+npm run dev -- --host   # Start dev server with network access (spark.local:4321)
+npm run build           # Build production site to ./dist/
+npm run preview         # Preview production build locally
 ```
 
 ## Architecture

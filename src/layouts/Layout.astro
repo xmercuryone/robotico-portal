@@ -215,15 +215,47 @@ const finalStructuredData = structuredData || defaultStructuredData;
         }
       });
 
-      // Sticky header scroll effect
+      // Header and hero scroll effects
       const header = document.querySelector('.header');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 10) {
+      const hero = document.querySelector('.hero');
+      const heroOverlay = document.querySelector('.hero-overlay');
+
+      function updateScrollEffects() {
+        const scrollY = window.scrollY;
+        const heroHeight = hero?.offsetHeight || 0;
+
+        if (hero && heroHeight > 0) {
+          // Calculate scroll progress through hero (0 to 1)
+          const scrollProgress = Math.min(scrollY / (heroHeight * 0.8), 1);
+
+          // Update hero overlay darkness
+          document.documentElement.style.setProperty('--hero-scroll-opacity', scrollProgress.toString());
+
+          // Header state: over-hero or solid
+          if (scrollY < heroHeight - 100) {
+            header?.classList.add('over-hero');
+            header?.classList.remove('solid');
+          } else {
+            header?.classList.remove('over-hero');
+            header?.classList.add('solid');
+          }
+        } else {
+          // No hero on page - use solid header
+          header?.classList.remove('over-hero');
+          header?.classList.add('solid');
+        }
+
+        // Scrolled state for shadow
+        if (scrollY > 10) {
           header?.classList.add('scrolled');
         } else {
           header?.classList.remove('scrolled');
         }
-      });
+      }
+
+      // Initial state
+      updateScrollEffects();
+      window.addEventListener('scroll', updateScrollEffects, { passive: true });
 
       // Set header height CSS variable from actual measured height
       function updateHeaderHeight() {
