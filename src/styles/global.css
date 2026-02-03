@@ -255,7 +255,7 @@ a:hover {
 .nav a {
   color: var(--color-text-secondary);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 400;
   transition: color var(--transition-fast);
 }
 
@@ -361,6 +361,7 @@ a:hover {
 /* Hero section */
 .hero {
   position: relative;
+  width: 100%;
   min-height: 85vh;
   display: flex;
   align-items: flex-end;
@@ -370,13 +371,17 @@ a:hover {
 .hero-content {
   position: relative;
   z-index: 1;
-  padding-bottom: var(--spacing-2xl);
+  width: 100%;
+  max-width: 1265px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--spacing-lg);
+  padding-bottom: calc(var(--spacing-2xl) * 1.7);
+  box-sizing: border-box;
 }
 
 .hero-text {
   max-width: 600px;
-  /* Align with table section (1265px centered) */
-  margin-left: calc((100% - 1265px) / 2 + var(--spacing-lg));
   /* Fade out as user scrolls */
   opacity: var(--header-text-opacity, 1);
   transition: opacity 0.05s ease-out;
@@ -391,7 +396,7 @@ a:hover {
 .hero-label {
   display: inline-block;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--color-primary);
@@ -403,7 +408,7 @@ a:hover {
 
 .hero h1 {
   font-size: 5rem;
-  font-weight: 700;
+  font-weight: 400;
   color: #ffffff;
   letter-spacing: -0.03em;
   line-height: 1;
@@ -424,7 +429,7 @@ a:hover {
   padding: var(--spacing-md) var(--spacing-xl);
   background: var(--color-primary);
   color: #000000;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1rem;
   border: none;
   cursor: pointer;
@@ -518,7 +523,7 @@ a:hover {
 
 .table-title {
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -0.01em;
 }
 
@@ -540,7 +545,7 @@ th {
   padding: var(--spacing-md) var(--spacing-lg);
   text-align: left;
   font-size: 0.6875rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -578,7 +583,7 @@ tr:hover {
 
 /* Rank column */
 .rank {
-  font-weight: 500;
+  font-weight: 400;
   color: var(--color-text-muted);
   font-size: 0.875rem;
   width: 50px;
@@ -623,7 +628,7 @@ img.company-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 0.875rem;
   color: var(--color-text-muted);
   flex-shrink: 0;
@@ -636,7 +641,7 @@ img.company-logo {
 }
 
 .company-name {
-  font-weight: 600;
+  font-weight: 400;
   color: var(--color-text);
   transition: color var(--transition-fast);
 }
@@ -682,7 +687,7 @@ img.company-logo {
 
 /* Valuation */
 .valuation {
-  font-weight: 600;
+  font-weight: 400;
   font-family: var(--font-mono);
   color: var(--color-text);
   font-size: 0.9375rem;
@@ -690,7 +695,7 @@ img.company-logo {
 
 /* Change */
 .change {
-  font-weight: 500;
+  font-weight: 400;
   font-family: var(--font-mono);
   font-size: 0.875rem;
 }
@@ -723,7 +728,7 @@ img.company-logo {
   padding: 4px 12px;
   border-radius: 0;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.02em;
   border: 1px solid;
 }
@@ -812,7 +817,7 @@ img.company-logo {
 .footer-links a {
   color: var(--color-text-secondary);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .footer-links a:hover {
@@ -878,7 +883,7 @@ img.company-logo {
   border: none;
   border-radius: 0;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--color-text-muted);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -1031,7 +1036,7 @@ img.company-logo {
 .mobile-nav a {
   padding: var(--spacing-sm) 0;
   color: var(--color-text-secondary);
-  font-weight: 500;
+  font-weight: 400;
   border-bottom: 1px solid var(--color-border-light);
 }
 
@@ -1081,16 +1086,16 @@ img.company-logo {
 
   /* Hero mobile */
   .hero {
-    min-height: 70vh;
+    min-height: 100vh;
   }
 
   .hero-content {
-    padding-bottom: var(--spacing-xl);
+    padding: 0 var(--spacing-md);
+    padding-bottom: calc(var(--spacing-2xl) * 2);
   }
 
   .hero-text {
     max-width: 100%;
-    margin-left: var(--spacing-md);
   }
 
   .hero-label {
@@ -1377,7 +1382,7 @@ img.company-logo {
   padding: var(--spacing-sm) var(--spacing-lg);
   background: var(--color-primary);
   color: #010101;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 0.875rem;
   border: 1px solid var(--color-primary);
   border-radius: 0;
@@ -1398,7 +1403,7 @@ img.company-logo {
   padding: var(--spacing-sm) var(--spacing-lg);
   background: transparent;
   color: var(--color-text);
-  font-weight: 500;
+  font-weight: 400;
   font-size: 0.875rem;
   border: 1px solid var(--color-border);
   border-radius: 0;
@@ -1419,7 +1424,7 @@ img.company-logo {
   padding: var(--spacing-sm) var(--spacing-lg);
   background: var(--color-blue);
   color: #FFFFFF;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 0.875rem;
   border: 1px solid var(--color-blue);
   border-radius: 0;
@@ -1463,7 +1468,7 @@ a[target="_blank"]:hover {
 
 .overview-header h2 {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: var(--spacing-xs);
   letter-spacing: -0.02em;
 }
@@ -1502,7 +1507,7 @@ a[target="_blank"]:hover {
 .overview-stat-value {
   display: block;
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: var(--spacing-xs);
 }
 
@@ -1528,7 +1533,7 @@ a[target="_blank"]:hover {
 
 .market-breakdown h3 {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: var(--spacing-md);
 }
 

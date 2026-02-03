@@ -119,7 +119,6 @@ const finalStructuredData = structuredData || defaultStructuredData;
           <nav class="nav">
             <a href="/">Companies</a>
             <a href="/industry">Industry</a>
-            <a href="/globe">Globe</a>
             <a href="/news">News</a>
             <a href="https://robotico.com" target="_blank" rel="noopener">About</a>
           </nav>
@@ -155,7 +154,6 @@ const finalStructuredData = structuredData || defaultStructuredData;
       <nav id="mobile-nav" class="mobile-nav">
         <a href="/">Companies</a>
         <a href="/industry">Industry</a>
-        <a href="/globe">Globe</a>
         <a href="/news">News</a>
         <a href="https://robotico.com" target="_blank" rel="noopener">About Robotico</a>
       </nav>
@@ -175,7 +173,6 @@ const finalStructuredData = structuredData || defaultStructuredData;
           <div class="footer-links">
             <a href="/">Companies</a>
             <a href="/industry">Industry</a>
-            <a href="/globe">Globe</a>
             <a href="/news">News</a>
             <a href="https://robotico.com" target="_blank" rel="noopener">About</a>
           </div>
@@ -219,6 +216,7 @@ const finalStructuredData = structuredData || defaultStructuredData;
       const header = document.querySelector('.header');
       const hero = document.querySelector('.hero');
       const videoBackground = document.querySelector('.video-background');
+      const globeBackground = document.querySelector('.globe-background');
       const videoOverlay = document.querySelector('.video-overlay');
 
       function updateScrollEffects() {
@@ -226,27 +224,34 @@ const finalStructuredData = structuredData || defaultStructuredData;
         const heroHeight = hero?.offsetHeight || 0;
         const headerHeight = header?.offsetHeight || 62;
 
-        // Check if page has video background (homepage) or regular hero
+        // Check if page has video/globe background (homepage or industry) or regular hero
         const hasVideoBackground = !!videoBackground;
+        const hasGlobeBackground = !!globeBackground;
+        const hasFullscreenBackground = hasVideoBackground || hasGlobeBackground;
 
-        if (hasVideoBackground && heroHeight > 0) {
-          // Mark header as being on video page
+        if (hasFullscreenBackground && heroHeight > 0) {
+          // Mark header as being on video/globe page
           header?.classList.add('on-video-page');
 
-          // Calculate when table touches header
-          // Table starts after hero, so transition point is heroHeight - headerHeight
+          // Calculate when content touches header
+          // Content starts after hero, so transition point is heroHeight - headerHeight
           const transitionPoint = heroHeight - headerHeight;
 
           // Calculate scroll progress (0 to 1) for darkening effect
           const scrollProgress = Math.min(Math.max(scrollY / transitionPoint, 0), 1);
 
-          // Update video overlay darkness (starts at 0.3, ends at 1 = full black)
-          document.documentElement.style.setProperty('--video-darken', scrollProgress.toString());
+          // Update overlay darkness (starts at 0.3, ends at 1 = full black)
+          if (hasVideoBackground) {
+            document.documentElement.style.setProperty('--video-darken', scrollProgress.toString());
+          }
+          if (hasGlobeBackground) {
+            document.documentElement.style.setProperty('--globe-darken', scrollProgress.toString());
+          }
 
-          // Update header text opacity (1 at top, 0 when table touches header)
+          // Update header text opacity (1 at top, 0 when content touches header)
           document.documentElement.style.setProperty('--header-text-opacity', (1 - scrollProgress).toString());
 
-          // Header state: gradient while in hero, solid black when table touches
+          // Header state: gradient while in hero, solid black when content touches
           if (scrollY < transitionPoint) {
             header?.classList.add('over-hero');
             header?.classList.remove('solid');
