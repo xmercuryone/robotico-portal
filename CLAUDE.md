@@ -50,21 +50,23 @@ src/
 public/
 ├── logos/          # Company favicon/logos (.ico)
 ├── robots/         # Robot images (.webp)
+├── fonts/          # TWK Everett font files (.otf)
 ├── robotico-logo.svg       # White logo (for dark backgrounds)
 ├── robotico-logo-dark.svg  # Black logo (for light backgrounds)
 ├── favicon.svg     # Site favicon (Robotico icon)
-└── og-image.svg    # Open Graph image
+├── og-image.png    # Open Graph image (1200x630 PNG)
+└── og-image.svg    # Open Graph image (SVG source)
 
 netlify/
 └── functions/      # Netlify serverless functions (stock-prices.js)
 ```
 
 ### Key Pages
-- `/` - Main ranking page with all 20 companies sorted by market cap
+- `/` - Main ranking page with full-page video background and company table
 - `/company/[id]` - Individual company profiles (e.g., `/company/tesla`)
 - `/robot/[id]` - Robot detail pages (e.g., `/robot/optimus-gen2`)
-- `/industry` - Industry-wide statistics and trends
-- `/globe` - Interactive 3D globe showing company locations
+- `/industry` - Industry overview with 3D globe background and metrics
+- `/globe` - Redirects to `/industry` (merged)
 
 ### Data Flow
 1. Company data is defined in `src/data/companies.json`
@@ -111,12 +113,68 @@ Some company logos require special handling:
 ## Mobile Responsiveness
 
 CSS breakpoints in `src/styles/global.css`:
-- 768px - Tablet
-- 480px - Mobile
-- 360px - Small mobile
+- 992px - Tablet (filters hidden, search only)
+- 768px - Mobile
+- 480px - Small mobile
+- 360px - Very small mobile
+
+### Table Controls on Mobile
+- Below 992px: Type toggle and country filter are hidden
+- Only the search bar remains visible next to "All Companies"
+
+## Page Design
+
+### Homepage (`/`)
+- **Video Background**: Full-page fixed video background (Figure AI video)
+- **Hero Section**: Left-aligned text at bottom (85vh height)
+- **Table Section**: Floating table with solid background, visible video on sides
+- **Scroll Effects**: Video darkens as user scrolls, hero text fades out
+- **Alignment**: Header logo, hero text, and table borders all align at 1265px max-width
+
+### Industry Page (`/industry`)
+- **Globe Background**: Full-screen 3D globe (Three.js) as fixed background
+- **Globe Position**: 10% padding-top to show top of sphere
+- **Hero Section**: Same structure as homepage (85vh, left-aligned)
+- **Metrics Header**: 4 key metrics in table-container (same style as homepage table)
+- **Charts**: Industry growth, market share, valuation distribution
+- **Scroll Effects**: Globe darkens as user scrolls
+
+### Scroll Effects (CSS Variables)
+- `--video-darken` / `--globe-darken`: 0 to 1, controls overlay opacity
+- `--header-text-opacity`: Controls hero text fade
+- Managed in `Layout.astro` scroll event listener
+
+### Theme
+- **Default**: Dark mode (regardless of system preference)
+- **Toggle**: Users can switch to light mode (saved in localStorage)
+- Theme initialization in `Layout.astro` head script
+
+## Open Graph Support
+
+### Meta Tags
+- `og:image:width` (1200) and `og:image:height` (630)
+- `og:image:alt` and `twitter:image:alt`
+- Full Twitter Card support (`summary_large_image`)
+
+### OG Images
+- **Default**: `/og-image.png` (1200x630 PNG)
+- **Company pages**: Use company logo
+- **Robot pages**: Use robot image
+- SVG version also available at `/og-image.svg`
 
 ## Development Notes
 
 - Use `spark.local` instead of `localhost` for local URLs
 - Python HTTP server works better than Vite dev server for network access: `python3 -m http.server 4321 --bind 0.0.0.0` from dist/
 - Headless Chromium for screenshots: `/snap/bin/chromium --headless --no-sandbox --screenshot=file.png --window-size=1400,900 "URL"`
+
+## Manual Netlify Deployment
+
+```bash
+# Build and deploy
+npm run build
+export NETLIFY_AUTH_TOKEN=<token>
+netlify deploy --prod --dir=dist --site=70d38144-b214-4f90-be0d-364bc16332d8
+```
+
+Site ID: `70d38144-b214-4f90-be0d-364bc16332d8`
