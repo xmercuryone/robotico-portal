@@ -100,10 +100,9 @@ const finalStructuredData = structuredData || defaultStructuredData;
     <!-- Structured Data for AI and Search Engines -->
     <script type="application/ld+json" set:html={JSON.stringify(finalStructuredData)} />
     <script is:inline>
-      // Prevent flash of wrong theme
+      // Prevent flash of wrong theme - default to dark mode
       (function() {
-        const theme = localStorage.getItem('theme') ||
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const theme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>

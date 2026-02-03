@@ -100,28 +100,30 @@ const industryStructuredData = {
       </div>
     </section>
 
-    <!-- Industry Content -->
-    <div class="industry-section">
-      <div class="industry-content">
-        <!-- Key Metrics -->
-        <section class="key-metrics">
-          <div class="metric-card highlight">
+    <!-- Industry Content - Same structure as homepage table -->
+    <div class="table-section">
+      <div class="table-container">
+        <!-- Key Metrics Header -->
+        <div class="metrics-header">
+          <div class="metric-item highlight">
             <span class="metric-value" id="total-industry-cap">—</span>
             <span class="metric-label">Total Industry Valuation</span>
           </div>
-          <div class="metric-card">
+          <div class="metric-item">
             <span class="metric-value" id="yoy-growth">—</span>
             <span class="metric-label">Growth (6 Months)</span>
           </div>
-          <div class="metric-card">
+          <div class="metric-item">
             <span class="metric-value">{companies.length}</span>
             <span class="metric-label">Companies Tracked</span>
           </div>
-          <div class="metric-card">
+          <div class="metric-item">
             <span class="metric-value">{countries.length}</span>
             <span class="metric-label">Countries</span>
           </div>
-        </section>
+        </div>
+
+        <div class="industry-charts">
 
         <!-- Industry Growth Chart -->
         <section class="chart-section">
@@ -210,20 +212,7 @@ const industryStructuredData = {
           </div>
         </section>
 
-        <!-- Globe Legend -->
-        <section class="globe-legend-section">
-          <div class="globe-legend">
-            <div class="legend-item">
-              <span class="legend-dot public"></span>
-              <span>Public Company</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot private"></span>
-              <span>Private Company</span>
-            </div>
-          </div>
-          <p class="legend-note">Click on markers in the globe to view company details</p>
-        </section>
+        </div>
       </div>
     </div>
   </div>
@@ -252,7 +241,8 @@ const industryStructuredData = {
     // Scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 2.5;
+    camera.position.set(0, 1.2, 2.2);  // Move camera up to show top of globe
+    camera.lookAt(0, 0, 0);  // Look at center of globe
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -744,10 +734,12 @@ const industryStructuredData = {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 120%;
     z-index: -1;
-    overflow: hidden;
+    overflow: visible;
     background: var(--color-bg);
+    padding-top: 10%;
+    box-sizing: border-box;
   }
 
   .globe-background canvas {
@@ -785,12 +777,11 @@ const industryStructuredData = {
     z-index: 1;
   }
 
-  /* Industry hero - similar to homepage but with different height */
+  /* Industry hero - same height as homepage */
   .industry-hero {
-    min-height: 100vh;
+    min-height: 85vh;
     display: flex;
     align-items: flex-end;
-    padding-bottom: calc(var(--spacing-2xl) * 2);
   }
 
   .industry-hero .hero-content {
@@ -798,7 +789,7 @@ const industryStructuredData = {
     max-width: 1265px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
-    padding-bottom: calc(var(--spacing-2xl) * 2);
+    padding-bottom: calc(var(--spacing-2xl) * 1.7);
   }
 
   .industry-hero .hero-text {
@@ -806,37 +797,27 @@ const industryStructuredData = {
     transition: opacity 0.05s ease-out;
   }
 
-  /* Industry content section */
-  .industry-section {
-    background: var(--color-bg);
-    position: relative;
-  }
-
-  .industry-content {
-    max-width: 1265px;
-    margin: 0 auto;
-    padding: var(--spacing-2xl) var(--spacing-lg);
-  }
-
-  /* Key Metrics */
-  .key-metrics {
+  /* Metrics Header - styled like table header */
+  .metrics-header {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-2xl);
+    gap: 1px;
+    background: var(--color-border);
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .metric-card {
+  .metric-item {
     background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 0;
-    padding: var(--spacing-xl);
+    padding: var(--spacing-xl) var(--spacing-lg);
     text-align: center;
   }
 
-  .metric-card.highlight {
-    border-color: var(--color-primary);
-    background: rgba(30, 214, 18, 0.05);
+  [data-theme="dark"] .metric-item {
+    background: rgba(1, 1, 1, 0.95);
+  }
+
+  .metric-item.highlight .metric-value {
+    color: var(--color-primary);
   }
 
   .metric-value {
@@ -857,8 +838,15 @@ const industryStructuredData = {
   }
 
   .metric-label {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Industry Charts Content */
+  .industry-charts {
+    padding: var(--spacing-2xl) var(--spacing-lg);
   }
 
   /* Chart Sections */
@@ -965,47 +953,6 @@ const industryStructuredData = {
     background: var(--color-text-muted);
   }
 
-  /* Globe Legend Section */
-  .globe-legend-section {
-    text-align: center;
-    padding: var(--spacing-xl) 0;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .globe-legend {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-xl);
-    margin-bottom: var(--spacing-md);
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    font-size: 0.875rem;
-    color: var(--color-text-secondary);
-  }
-
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-
-  .legend-dot.public {
-    background: #1ED612;
-  }
-
-  .legend-dot.private {
-    background: var(--color-text);
-  }
-
-  .legend-note {
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
-  }
-
   /* Company Tooltip */
   .company-tooltip {
     position: fixed;
@@ -1068,32 +1015,30 @@ const industryStructuredData = {
 
   /* Responsive */
   @media (max-width: 1024px) {
-    .key-metrics {
+    .metrics-header {
       grid-template-columns: repeat(2, 1fr);
     }
 
     .breakdown-grid {
       grid-template-columns: 1fr;
     }
-
   }
 
   @media (max-width: 768px) {
-    .industry-content {
+    .industry-charts {
       padding: var(--spacing-xl) var(--spacing-md);
     }
 
     .industry-hero .hero-content {
       padding: 0 var(--spacing-md);
-      padding-bottom: calc(var(--spacing-2xl) * 2);
+      padding-bottom: calc(var(--spacing-2xl) * 1.7);
     }
 
-    .key-metrics {
+    .metrics-header {
       grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-md);
     }
 
-    .metric-card {
+    .metric-item {
       padding: var(--spacing-md);
     }
 
@@ -1109,6 +1054,5 @@ const industryStructuredData = {
     .chart-container.large {
       height: 300px;
     }
-
   }
 </style>
