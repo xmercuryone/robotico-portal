@@ -136,30 +136,26 @@ const homepageStructuredData = {
   canonicalUrl={siteUrl}
   structuredData={homepageStructuredData}
 >
-  <div class="grid-lines-wrapper">
+  <!-- Full-page video background -->
+  <div class="video-background">
+    <video class="bg-video" autoplay muted loop playsinline>
+      <source src="https://videos.ctfassets.net/qx5k8y1u9drj/2fyl7BnOtv5uyHkmWmnrQv/f9d9a70af813f0099d4a649b6748ec1a/homepage-01.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+
+  <div class="page-content">
     <section class="hero">
-      <div class="hero-video-container">
-        <video class="hero-video" autoplay muted loop playsinline>
-          <source src="https://videos.ctfassets.net/qx5k8y1u9drj/2fyl7BnOtv5uyHkmWmnrQv/f9d9a70af813f0099d4a649b6748ec1a/homepage-01.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-      </div>
       <div class="container hero-content">
         <div class="hero-text">
           <span class="hero-label">The Future is Here</span>
           <h1>Humanoid<br>Robotics</h1>
           <p>Track {companies.length} companies building the next generation of intelligent machines</p>
-          <a href="#companies-table" class="hero-cta">
-            Explore Companies
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M7 17l9.2-9.2M17 17V7H7"/>
-            </svg>
-          </a>
         </div>
       </div>
     </section>
 
-    <div class="container">
+    <div class="table-section">
       <div class="table-container">
       <div class="table-header">
         <h2 class="table-title">All Companies</h2>

@@ -218,20 +218,44 @@ const finalStructuredData = structuredData || defaultStructuredData;
       // Header and hero scroll effects
       const header = document.querySelector('.header');
       const hero = document.querySelector('.hero');
-      const heroOverlay = document.querySelector('.hero-overlay');
+      const videoBackground = document.querySelector('.video-background');
+      const videoOverlay = document.querySelector('.video-overlay');
 
       function updateScrollEffects() {
         const scrollY = window.scrollY;
         const heroHeight = hero?.offsetHeight || 0;
+        const headerHeight = header?.offsetHeight || 62;
 
-        if (hero && heroHeight > 0) {
-          // Calculate scroll progress through hero (0 to 1)
-          const scrollProgress = Math.min(scrollY / (heroHeight * 0.8), 1);
+        // Check if page has video background (homepage) or regular hero
+        const hasVideoBackground = !!videoBackground;
 
-          // Update hero overlay darkness
-          document.documentElement.style.setProperty('--hero-scroll-opacity', scrollProgress.toString());
+        if (hasVideoBackground && heroHeight > 0) {
+          // Mark header as being on video page
+          header?.classList.add('on-video-page');
 
-          // Header state: over-hero or solid
+          // Calculate when table touches header
+          // Table starts after hero, so transition point is heroHeight - headerHeight
+          const transitionPoint = heroHeight - headerHeight;
+
+          // Calculate scroll progress (0 to 1) for darkening effect
+          const scrollProgress = Math.min(Math.max(scrollY / transitionPoint, 0), 1);
+
+          // Update video overlay darkness (starts at 0.3, ends at 1 = full black)
+          document.documentElement.style.setProperty('--video-darken', scrollProgress.toString());
+
+          // Update header text opacity (1 at top, 0 when table touches header)
+          document.documentElement.style.setProperty('--header-text-opacity', (1 - scrollProgress).toString());
+
+          // Header state: gradient while in hero, solid black when table touches
+          if (scrollY < transitionPoint) {
+            header?.classList.add('over-hero');
+            header?.classList.remove('solid');
+          } else {
+            header?.classList.remove('over-hero');
+            header?.classList.add('solid');
+          }
+        } else if (hero && heroHeight > 0) {
+          // Other pages with hero section
           if (scrollY < heroHeight - 100) {
             header?.classList.add('over-hero');
             header?.classList.remove('solid');
